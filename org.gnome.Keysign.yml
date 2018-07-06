@@ -32,52 +32,26 @@ cleanup:
   - "*.la"
   - "*.a"
 modules:
-  - name: setuptools
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - python2 setup.py build
-      - python2 setup.py install --prefix=${FLATPAK_DEST}
-    sources:
-      - type: archive
-        url: https://pypi.python.org/packages/32/3c/e853a68b703f347f5ed86585c2dd2828a83252e1216c1201fa6f81270578/setuptools-26.1.1.tar.gz#md5=0744ee90ad266fb117d59f94334185d0
-        sha256: 475ce28993d7cb75335942525b9fac79f7431a7f6e8a0079c0f2680641379481
-
-  - name: pip
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - python2 setup.py build
-      - python2 setup.py install --prefix=${FLATPAK_DEST}
-    sources:
-      - type: archive
-        url: https://pypi.python.org/packages/e7/a8/7556133689add8d1a54c0b14aeff0acb03c64707ce100ecd53934da1aa13/pip-8.1.2.tar.gz
-        sha256: 4d24b03ffa67638a3fa931c09fd9e0273ffa904e95ebebe7d4b1a54c93d7b732
-
   - name: pycairo
     buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - python2 setup.py build
-      - python2 setup.py install --prefix=${FLATPAK_DEST}
+      - python3 setup.py build
+      - python3 setup.py install --prefix=${FLATPAK_DEST}
     sources:
       - type: archive
         url: https://github.com/pygobject/pycairo/releases/download/v1.13.4/pycairo-1.13.4.tar.gz
         sha256: 9e1eb50d4b61167cfde585261d93fde6ecda08f0f6c0136d3cf92abc5eb893ed
 
-  - name: python2-pytz
+  - name: python3-pytz
     buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pytz
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pytz
     sources:
       - type: file
         url: https://files.pythonhosted.org/packages/10/76/52efda4ef98e7544321fd8d5d512e11739c1df18b0649551aeccfb1c8376/pytz-2018.4.tar.gz
@@ -86,7 +60,7 @@ modules:
   - name: pygobject
     build-options:
       env:
-        PYTHON: python2
+        PYTHON: python3
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
@@ -104,21 +78,22 @@ modules:
         url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
         sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
 
-  - name: dbus-python
+  - name: python3-dbus-python
+    buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
+    build-commands:
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} dbus-python
     sources:
-      - type: archive
-        url: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.4.tar.gz
-        sha256: e2f1d6871f74fba23652e51d10873e54f71adab0525833c19bad9e99b1b2f9cc
+      - type: file
+        url: https://files.pythonhosted.org/packages/3f/e7/4edb582d1ffd5ac3c84188deea32e960b5c8c0fe1da56ce70224f85ce542/dbus-python-1.2.8.tar.gz
+        sha256: abf12bbb765e300bf8e2a1b2f32f85949eab06998dbda127952c31cb63957b6f
 
   - name: avahi
     # hrm, I don't want to install this, but we need the python module
-    disabled: false
     rm-configure: true
     config-opts:
-      - "--enable-python"
       - "--disable-static"
       - "--disable-mono"
       - "--disable-monodoc"
@@ -126,23 +101,22 @@ modules:
       - "--disable-qt4"
       - "--disable-gtk"
       - "--disable-gtk3"
-      - "--enable-core-docs"
       - "--with-distro=none"
       - "--with-systemdsystemunitdir=no"
       - "--disable-libdaemon"
       - "--disable-pygtk"
       - "--disable-gdbm"
+      - "--disable-manpages"
+    build-options:
+      env:
+        PYTHON: /usr/bin/python3
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     sources:
       - type: archive
-        url: http://avahi.org/download/avahi-0.6.31.tar.gz
-        sha256: 8372719b24e2dd75de6f59bb1315e600db4fd092805bd1201ed0cb651a2dab48
-      - type: script
-        commands:
-        - autoreconf -fi
-        dest-filename: autogen.sh
+        url: http://avahi.org/download/avahi-0.7.tar.gz
+        sha256: 57a99b5dfe7fdae794e3d1ee7a62973a368e91e414bd0dfa5d84434de5b14804
 
   - name: gstreamer
     sources:
@@ -199,46 +173,46 @@ modules:
         url: https://gstreamer.freedesktop.org/src/gst-python/gst-python-1.9.1.tar.xz
         sha256: 2ab16a84efbabacfcf8f7920ab6c6725c577f08a82bf4cee45edf415a917015f
 
-  - name: python2-babel
+  - name: python3-babel
     buildsystem: simple
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} babel
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} babel
     sources:
       - type: file
         url: https://files.pythonhosted.org/packages/0e/d5/9b1d6a79c975d0e9a32bd337a1465518c2519b14b214682ca9892752417e/Babel-2.5.3.tar.gz
         sha256: 8ce4cb6fdd4393edd323227cba3a077bceb2a6ce5201c902c65e730046f41f14
 
-  - name: python2-six
+  - name: python3-six
     buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} six
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} six
     sources:
       - type: file
         url: https://files.pythonhosted.org/packages/16/d8/bc6316cf98419719bd59c91742194c111b6f2e85abac88e496adefaf7afe/six-1.11.0.tar.gz
         sha256: 70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9
 
-  - name: python2-qrcode
+  - name: python3-qrcode
     buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} qrcode
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} qrcode
     sources:
       - type: file
         url: https://pypi.python.org/packages/87/16/99038537dc58c87b136779c0e06d46887ff5104eb8c64989aac1ec8cba81/qrcode-5.3.tar.gz
         sha256: 4115ccee832620df16b659d4653568331015c718a754855caf5930805d76924e
 
-  - name: python2-requests
+  - name: python3-requests
     buildsystem: simple
     ensure-writable:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} requests
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} requests
     sources:
       - type: file
         url: https://files.pythonhosted.org/packages/4d/9c/46e950a6f4d6b4be571ddcae21e7bc846fcbb88f1de3eff0f6dd0a6be55d/certifi-2018.4.16.tar.gz
@@ -279,7 +253,7 @@ modules:
 
   - twisted.yml
 
-  - name: python2-lxml
+  - name: python3-lxml
     buildsystem: simple
     build-options:
       env:
@@ -288,7 +262,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} lxml
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} lxml
     sources:
       - type: file
         url: https://pypi.python.org/packages/e1/4c/d83979fbc66a2154850f472e69405572d89d2e6a6daee30d18e83e39ef3a/lxml-4.1.1.tar.gz
@@ -298,7 +272,7 @@ modules:
     no-autogen: true
     buildsystem: simple
     build-commands:
-      - pip2 install --prefix=${FLATPAK_DEST} .
+      - pip3 install --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.8/gnome-keysign-0.9.8.tar.gz
