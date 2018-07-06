@@ -301,5 +301,5 @@ modules:
       - pip2 install --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.7.2/gnome-keysign-0.9.7.2.tar.gz
-        sha256: 3418e3bb3484d408a24e79242881c5ad566de1e0bd59c54e7d87aabbe16a6798
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.8/gnome-keysign-0.9.8.tar.gz
+        sha256: 42e6e835bb7a1d0378d731e48afd3bd79c72b7be4b305e5ec1dab81a038c9f56
