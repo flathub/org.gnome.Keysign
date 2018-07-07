@@ -10,6 +10,8 @@ finish-args:
   - --socket=wayland
   - --share=network
   - --system-talk-name=org.freedesktop.Avahi
+  - --system-talk-name=org.bluez
+  - --allow=bluetooth
   - --device=all
   - --filesystem=~/.gnupg:ro
   - --filesystem=xdg-run/gnupg:ro
@@ -252,6 +254,48 @@ modules:
   - gpg.yml
 
   - twisted.yml
+
+  - shared-modules/udev/udev-175.json
+
+
+  - name: libical
+    cleanup:
+    - "/lib/cmake"
+    buildsystem: cmake
+    config-opts:
+    - "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib"
+    - "-DBUILD_SHARED_LIBS:BOOL=ON"
+    sources:
+    - type: archive
+      url: https://github.com/libical/libical/archive/v3.0.3.tar.gz
+      sha256: ef9f64540332c2aeb57f299a73c3b0de136f733ae61a281f449013159da94e7c
+
+  - name: bluez
+    config-opts:
+    - "--disable-datafiles"
+    - "--disable-systemd"
+    - "--enable-midi"
+    - "--enable-mesh"
+    - "--enable-experimental"
+    - "--enable-library"
+    - "--prefix=/app"
+    - "--sysconfdir=/app/etc"
+    sources:
+    - type: archive
+      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.49.tar.xz
+      sha256: 33301d7a514c73d535ee1f91c2aed1af1f2e53efe11d3ac06bcf0d7abed2ce95
+    - type: shell
+      commands:
+         - sed -i "s|\${exec_prefix}|/app|g" /app/share/pkgconfig/udev.pc
+
+  - name: python3-pybluez
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pybluez
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/c1/98/3149481d508bee174335be6725880f00d297afebe75c15e917af8f6fe169/PyBluez-0.22.zip
+        sha256: 4ce006716a54d9d18e8186a3f1c8b12a8e6befecffe8fd5828a291fb694ce49d
 
   - name: python3-lxml
     buildsystem: simple
