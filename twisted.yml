@@ -4,7 +4,7 @@ ensure-writable:
   - easy-install.pth
   - setuptools.pth
 build-commands:
-  - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} twisted
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} twisted
 sources:
   - type: file
     url: https://pypi.python.org/packages/a2/37/298f9547606c45d75aa9792369302cc63aa4bbcf7b5f607560180dd099d2/Twisted-17.9.0.tar.bz2
@@ -16,7 +16,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} attrs
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} attrs
     sources:
       - type: file
         url: https://pypi.python.org/packages/be/41/e909cb6d901e9689da947419505cc7fb7d242a08a62ee221fce6a009a523/attrs-17.2.0.tar.gz
@@ -28,7 +28,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} hyperlink
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} hyperlink
     sources:
       - type: file
         url: https://pypi.python.org/packages/83/df/3bdaf38f21f93429de02f04c6a967d2154955fc5b9a6a1a0b20a682edc13/hyperlink-17.3.1.tar.gz
@@ -40,7 +40,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} docutils
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} docutils
     sources:
       - type: file
         url: https://pypi.python.org/packages/84/f4/5771e41fdf52aabebbadecc9381d11dea0fa34e4759b4071244fa094804c/docutils-0.14.tar.gz
@@ -52,7 +52,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} mistune
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} mistune
     sources:
       - type: file
         url: https://pypi.python.org/packages/25/a4/12a584c0c59c9fed529f8b3c47ca8217c0cf8bcc5e1089d3256410cfbdbc/mistune-0.7.4.tar.gz
@@ -64,7 +64,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} m2r
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} m2r
     sources:
       - type: file
         url: https://pypi.python.org/packages/a0/95/7273d54664e74c3100d07206fe6b30247be046b39676972fc90ae04376a1/m2r-0.1.12.tar.gz
@@ -76,7 +76,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} setuptools_scm
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} setuptools_scm
     sources:
       - type: file
         url: https://pypi.python.org/packages/03/6d/aafdd01edd227ee879b691455bf19895091872af7e48192bea1758c82032/setuptools_scm-1.15.6.tar.gz
@@ -88,7 +88,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} automat
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} automat
     sources:
       - type: file
         url: https://pypi.python.org/packages/de/05/b8e453085cf8a7f27bb1226596f4ccf5cc9e758377d60284f990bbdc592c/Automat-0.6.0.tar.gz
@@ -100,7 +100,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} incremental
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} incremental
     sources:
       - type: file
         url: https://pypi.python.org/packages/8f/26/02c4016aa95f45479eea37c90c34f8fab6775732ae62587a874b619ca097/incremental-17.5.0.tar.gz
@@ -112,7 +112,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} constantly
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} constantly
     sources:
       - type: file
         url: https://pypi.python.org/packages/95/f1/207a0a478c4bb34b1b49d5915e2db574cadc415c9ac3a7ef17e29b2e8951/constantly-15.1.0.tar.gz
@@ -124,7 +124,7 @@ modules:
       - easy-install.pth
       - setuptools.pth
     build-commands:
-      - pip2 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} zope.interface
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} zope.interface
     sources:
       - type: file
         url: https://pypi.python.org/packages/bd/d2/25349ed41f9dcff7b3baf87bd88a4c82396cf6e02f1f42bb68657a3132af/zope.interface-4.4.3.tar.gz
