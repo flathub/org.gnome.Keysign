@@ -253,7 +253,9 @@ modules:
 
   - gpg.yml
 
-  - twisted.yml
+  - twisted[tls].yml
+
+  - magic-wormhole.yml
 
   - shared-modules/udev/udev-175.json
 
@@ -312,6 +314,15 @@ modules:
         url: https://pypi.python.org/packages/e1/4c/d83979fbc66a2154850f472e69405572d89d2e6a6daee30d18e83e39ef3a/lxml-4.1.1.tar.gz
         sha256: 940caef1ec7c78e0c34b0f6b94fe42d0f2022915ffc78643d28538a5cfd0f40e
 
+  - name: python3-future
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} future
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/00/2b/8d082ddfed935f3608cc61140df6dcbf0edea1bc3ab52fb6c29ae3e81e85/future-0.16.0.tar.gz
+        sha256: e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb
+
   - name: gnome-keysign
     no-autogen: true
     buildsystem: simple
@@ -319,5 +330,5 @@ modules:
       - pip3 install --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.8/gnome-keysign-0.9.8.tar.gz
-        sha256: 42e6e835bb7a1d0378d731e48afd3bd79c72b7be4b305e5ec1dab81a038c9f56
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.9/gnome-keysign-0.9.9.tar.gz
+        sha256: e4b32675664a32bef9386f2f6bc187c0506f54a1c6ceff5b07377f73a85e3e39
