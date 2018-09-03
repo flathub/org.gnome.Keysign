@@ -253,7 +253,7 @@ modules:
 
   - gpg.yml
 
-  - twisted.yml
+  - twisted[tls].yml
 
   - shared-modules/udev/udev-175.json
 
