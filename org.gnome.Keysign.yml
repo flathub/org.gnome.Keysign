@@ -290,15 +290,14 @@ modules:
     - "--disable-datafiles"
     - "--disable-systemd"
     - "--enable-midi"
-    - "--enable-mesh"
     - "--enable-experimental"
     - "--enable-library"
     - "--prefix=/app"
     - "--sysconfdir=/app/etc"
     sources:
     - type: archive
-      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.49.tar.xz
-      sha256: 33301d7a514c73d535ee1f91c2aed1af1f2e53efe11d3ac06bcf0d7abed2ce95
+      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.50.tar.xz
+      sha256: 5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911
 
   - name: python3-pybluez
     buildsystem: simple
