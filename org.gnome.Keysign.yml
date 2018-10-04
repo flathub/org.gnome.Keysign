@@ -337,6 +337,8 @@ modules:
     buildsystem: simple
     build-commands:
       - pip3 install --prefix=${FLATPAK_DEST} .
+    post-install:
+      - sed -i 's|python -m|python3 -m|g' /app/share/applications/org.gnome.Keysign.desktop
     sources:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.9/gnome-keysign-0.9.9.tar.gz
