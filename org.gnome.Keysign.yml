@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '3.28'
+runtime-version: '3.30'
 sdk: org.gnome.Sdk
 command: gnome-keysign
 copy-icon: true
@@ -123,20 +123,20 @@ modules:
   - name: gstreamer
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.12.3.tar.xz
-        sha256: d388f492440897f02b01eebb033ca2d41078a3d85c0eddc030cdea5a337a216e
+        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.14.4.tar.xz
+        sha256: f94f6696c5f05a3b3a9183e39c5f5c0b779f75a04c0efa497e7920afa985ffc7
 
   - name: gst-plugins-base
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.12.3.tar.xz
-        sha256: d3d37b8489d37fa0018973d850bd2067b98af335fef2fa543ee7d40359e3cea5
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.14.4.tar.xz
+        sha256: ca6139490e48863e7706d870ff4e8ac9f417b56f3b9e4b3ce490c13b09a77461
 
   - name: gst-plugins-good
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.12.3.tar.xz
-        sha256: 13e7f479296891fef5a686438f20ba7d534680becf2269ecc5ee24aa83b45f03
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.14.4.tar.xz
+        sha256: 5f8b553260cb0aac56890053d8511db1528d53cae10f0287cfce2cb2acc70979
 
   - name: gst-plugins-bad
     build-options:
@@ -144,25 +144,38 @@ modules:
         - "--enable-zbar"
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.12.3.tar.xz
-        sha256: 36d059761852bed0f1a7fcd3ef64a8aeecab95d2bca53cd6aa0f08054b1cbfec
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.14.4.tar.xz
+        sha256: 910b4e0e2e897e8b6d06767af1779d70057c309f67292f485ff988d087aa0de5
     modules:
       - name: zbar
         build-options:
           config-opts:
             - "--disable-video"
-            - "--without-python"
+            - "--without-xv"
+            - "--without-python2"
+            - "--without-gtk"
             - "--without-qt"
         sources:
-          - type: archive
-            url: https://www.linuxtv.org/downloads/zbar/zbar-0.20.tar.bz2
-            sha256: b92a130744c907905eb61479a03036569045a08693535c9b630c591ea13ee620
+          - type: git
+            url: git://git.linuxtv.org/zbar.git
+            commit: edcf08b49e0a5fe71c18fa9d4b8ed83ed8fc9082
+          - type: shell
+            commands:
+                # Patch for Imagemagick 7 https://git.archlinux.org/svntogit/community.git/tree/trunk/imagemagick7.patch?h=packages/zbar&id=f80dc934f730ee4204dc51f3ef47cd2ec7406898
+                - sed -i 's|wand/MagickWand.h|MagickWand/MagickWand.h|g' configure.ac
+                - sed -i 's|wand/MagickWand.h|MagickWand/MagickWand.h|g' zbarimg/zbarimg.c
+                # Avoid documentation
+                - sed -i '48d' Makefile.am
+          - type: script
+            dest-filename: autogen.sh
+            commands:
+                - autoreconf -vfi -W none
         modules:
           - name: ImageMagick
             sources:
               - type: archive
-                url: https://launchpad.net/imagemagick/main/6.9.9-27/+download/ImageMagick-6.9.9-27.tar.gz
-                sha256: f561df45ee99505213a39cd1e1056727cefa7dc00bac7c5372bb44448fb5c533
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.0.8-12.tar.gz
+                sha256: cd3a25183d433f3ad4f8ed6301c5ae5dfb0959c1f09b059acee447bb3881bf99
 
   - name: gst-python
     config-opts:
@@ -277,18 +290,14 @@ modules:
     - "--disable-datafiles"
     - "--disable-systemd"
     - "--enable-midi"
-    - "--enable-mesh"
     - "--enable-experimental"
     - "--enable-library"
     - "--prefix=/app"
     - "--sysconfdir=/app/etc"
     sources:
     - type: archive
-      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.49.tar.xz
-      sha256: 33301d7a514c73d535ee1f91c2aed1af1f2e53efe11d3ac06bcf0d7abed2ce95
-    - type: shell
-      commands:
-         - sed -i "s|\${exec_prefix}|/app|g" /app/share/pkgconfig/udev.pc
+      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.50.tar.xz
+      sha256: 5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911
 
   - name: python3-pybluez
     buildsystem: simple
@@ -328,6 +337,8 @@ modules:
     buildsystem: simple
     build-commands:
       - pip3 install --prefix=${FLATPAK_DEST} .
+    post-install:
+      - sed -i 's|python -m|python3 -m|g' /app/share/applications/org.gnome.Keysign.desktop
     sources:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0.9.9/gnome-keysign-0.9.9.tar.gz
