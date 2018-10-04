@@ -161,8 +161,8 @@ modules:
           - name: ImageMagick
             sources:
               - type: archive
-                url: https://launchpad.net/imagemagick/main/6.9.9-27/+download/ImageMagick-6.9.9-27.tar.gz
-                sha256: f561df45ee99505213a39cd1e1056727cefa7dc00bac7c5372bb44448fb5c533
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.0.8-12.tar.gz
+                sha256: cd3a25183d433f3ad4f8ed6301c5ae5dfb0959c1f09b059acee447bb3881bf99
 
   - name: gst-python
     config-opts:
