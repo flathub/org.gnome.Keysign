@@ -273,5 +273,5 @@ modules:
       - pip3 install --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.0.0/gnome-keysign-1.0.0.tar.gz
-        sha256: 7a267eb4945971ccd9e6759ae02180ab284db6576219fc0822caf93335e6f864
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.0.1/gnome-keysign-1.0.1.tar.gz
+        sha256: 4b0697af83b37229a6b028d76d48b1e59e9a8c32f3b9a5683db639122dbee6ba
