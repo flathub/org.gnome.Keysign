@@ -180,6 +180,12 @@ modules:
         url: https://files.pythonhosted.org/packages/52/2c/514e4ac25da2b08ca5a464c50463682126385c4272c18193876e91f4bc38/requests-2.21.0.tar.gz
         sha256: 502a824f31acdacb3a35b6690b5fbf0bc41d63a24a45c4004352b0242707598e
 
+  - name: gpgme
+    sources:
+      - type: archive
+        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
+        sha256: b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8
+
   - twisted[tls].yml
 
   - magic-wormhole.yml
