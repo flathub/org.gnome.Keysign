@@ -87,6 +87,7 @@ modules:
     build-options:
       config-opts:
         - "--enable-zbar"
+        - "--disable-aom"
     sources:
       - type: archive
         url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.14.4.tar.xz
