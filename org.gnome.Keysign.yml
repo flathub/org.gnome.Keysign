@@ -87,6 +87,7 @@ modules:
     build-options:
       config-opts:
         - "--enable-zbar"
+        - "--disable-aom"
     sources:
       - type: archive
         url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.14.4.tar.xz
@@ -184,21 +185,6 @@ modules:
       - type: archive
         url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
         sha256: b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8
-    modules:
-      - name: libassaun
-        sources:
-          - type: archive
-            url: https://www.gnupg.org/ftp/gcrypt/libassuan/libassuan-2.5.1.tar.bz2
-            sha256: 47f96c37b4f2aac289f0bc1bacfa8bd8b4b209a488d3d15e2229cb6cc9b26449
-        modules:
-          - name: libgpg-error
-            sources:
-              - type: archive
-                # this is a mirror because ftp is not yet supported https://github.com/flatpak/flatpak-builder/issues/23
-                url: https://mirrors.dotsrc.org/gnupg/libgpg-error/libgpg-error-1.32.tar.bz2
-                sha256: c345c5e73cc2332f8d50db84a2280abfb1d8f6d4f1858b9daa30404db44540ca
-
-  - gpg.yml
 
   - twisted[tls].yml
 
