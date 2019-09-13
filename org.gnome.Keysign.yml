@@ -227,6 +227,9 @@ modules:
       url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.50.tar.xz
       sha256: 5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911
 
+    - type: patch
+      path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
+
   - name: python3-pybluez
     buildsystem: simple
     build-commands:
