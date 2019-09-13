@@ -210,8 +210,8 @@ modules:
     - "-DBUILD_SHARED_LIBS:BOOL=ON"
     sources:
     - type: archive
-      url: https://github.com/libical/libical/archive/v3.0.4.tar.gz
-      sha256: 20f39343701ccd3ad896a9f9e982fdf85c1d3a35572e9d962216b69a64aef2ae
+      url: https://github.com/libical/libical/archive/v3.0.5.tar.gz
+      sha256: 483acbf7fee66ca071c2ff8183e46b6f2b3a89e1e866eadf4870eaaa281c8db1
 
   - name: bluez
     config-opts:
