@@ -83,6 +83,9 @@ modules:
         url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.16.0.tar.xz
         sha256: 654adef33380d604112f702c2927574cfc285e31307b79e584113858838bb0fd
 
+      - type: patch
+        path: 292.patch
+
   - name: gst-plugins-bad
     build-options:
       config-opts:
