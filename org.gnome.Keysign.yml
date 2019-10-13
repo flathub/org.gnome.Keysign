@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '3.32'
+runtime-version: '3.34'
 sdk: org.gnome.Sdk
 command: gnome-keysign
 copy-icon: true
@@ -68,20 +68,23 @@ modules:
   - name: gstreamer
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.14.4.tar.xz
-        sha256: f94f6696c5f05a3b3a9183e39c5f5c0b779f75a04c0efa497e7920afa985ffc7
+        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.16.0.tar.xz
+        sha256: 0e8e2f7118be437cba879353970cf83c2acced825ecb9275ba05d9186ef07c00
 
   - name: gst-plugins-base
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.14.4.tar.xz
-        sha256: ca6139490e48863e7706d870ff4e8ac9f417b56f3b9e4b3ce490c13b09a77461
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.16.0.tar.xz
+        sha256: 4093aa7b51e28fb24dfd603893fead8d1b7782f088b05ed0f22a21ef176fb5ae
 
   - name: gst-plugins-good
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.14.4.tar.xz
-        sha256: 5f8b553260cb0aac56890053d8511db1528d53cae10f0287cfce2cb2acc70979
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.16.0.tar.xz
+        sha256: 654adef33380d604112f702c2927574cfc285e31307b79e584113858838bb0fd
+
+      - type: patch
+        path: 292.patch
 
   - name: gst-plugins-bad
     build-options:
@@ -90,8 +93,12 @@ modules:
         - "--disable-aom"
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.14.4.tar.xz
-        sha256: 910b4e0e2e897e8b6d06767af1779d70057c309f67292f485ff988d087aa0de5
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.16.0.tar.xz
+        sha256: 22139de35626ada6090bdfa3423b27b7fc15a0198331d25c95e6b12cb1072b05
+
+      - type: patch
+        path: 548.patch
+
     modules:
       - name: zbar
         build-options:
@@ -186,6 +193,7 @@ modules:
         url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
         sha256: b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8
 
+  - python3-wheel.json
   - twisted[tls].yml
 
   - magic-wormhole.yml
@@ -202,8 +210,8 @@ modules:
     - "-DBUILD_SHARED_LIBS:BOOL=ON"
     sources:
     - type: archive
-      url: https://github.com/libical/libical/archive/v3.0.4.tar.gz
-      sha256: 20f39343701ccd3ad896a9f9e982fdf85c1d3a35572e9d962216b69a64aef2ae
+      url: https://github.com/libical/libical/archive/v3.0.5.tar.gz
+      sha256: 483acbf7fee66ca071c2ff8183e46b6f2b3a89e1e866eadf4870eaaa281c8db1
 
   - name: bluez
     config-opts:
@@ -218,6 +226,9 @@ modules:
     - type: archive
       url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.50.tar.xz
       sha256: 5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911
+
+    - type: patch
+      path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
 
   - name: python3-pybluez
     buildsystem: simple
@@ -259,5 +270,5 @@ modules:
       - pip3 install --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.0.1/gnome-keysign-1.0.1.tar.gz
-        sha256: 4b0697af83b37229a6b028d76d48b1e59e9a8c32f3b9a5683db639122dbee6ba
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.1.1/gnome-keysign-1.1.1.tar.gz
+        sha256: c39ca6e6518455b30f3f9626c4ed72f227c6926229421c4c005d0e3af3975158
