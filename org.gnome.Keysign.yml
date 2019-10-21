@@ -65,26 +65,7 @@ modules:
         url: https://files.pythonhosted.org/packages/3f/e7/4edb582d1ffd5ac3c84188deea32e960b5c8c0fe1da56ce70224f85ce542/dbus-python-1.2.8.tar.gz
         sha256: abf12bbb765e300bf8e2a1b2f32f85949eab06998dbda127952c31cb63957b6f
 
-  - name: gstreamer
-    sources:
-      - type: archive
-        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.16.0.tar.xz
-        sha256: 0e8e2f7118be437cba879353970cf83c2acced825ecb9275ba05d9186ef07c00
 
-  - name: gst-plugins-base
-    sources:
-      - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.16.0.tar.xz
-        sha256: 4093aa7b51e28fb24dfd603893fead8d1b7782f088b05ed0f22a21ef176fb5ae
-
-  - name: gst-plugins-good
-    sources:
-      - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.16.0.tar.xz
-        sha256: 654adef33380d604112f702c2927574cfc285e31307b79e584113858838bb0fd
-
-      - type: patch
-        path: 292.patch
 
   - name: gst-plugins-bad
     build-options:
@@ -198,9 +179,6 @@ modules:
 
   - magic-wormhole.yml
 
-  - shared-modules/udev/udev-175.json
-
-
   - name: libical
     cleanup:
     - "/lib/cmake"
@@ -217,9 +195,13 @@ modules:
     config-opts:
     - "--disable-datafiles"
     - "--disable-systemd"
-    - "--enable-midi"
     - "--enable-experimental"
     - "--enable-library"
+    - "--disable-client"
+    - "--disable-mesh"
+    - "--disable-tools"
+    - "--disable-monitor"
+    - "--disable-udev"
     - "--prefix=/app"
     - "--sysconfdir=/app/etc"
     sources:
