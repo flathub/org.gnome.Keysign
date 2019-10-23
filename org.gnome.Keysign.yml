@@ -16,6 +16,11 @@ finish-args:
   - --device=all
   - --filesystem=~/.gnupg:ro
   - --filesystem=xdg-run/gnupg:ro
+  # We use this folder to support dragging and dropping emails into the app
+  # There might be a copy-and-paste portal: https://github.com/flatpak/xdg-desktop-portal/issues/99
+  # And Evolution might be capable of sending the whole email via the clipboard: https://gitlab.gnome.org/GNOME/evolution/issues/618
+  # Until any of that has landed, we make the folder read-only.
+  - --filesystem=xdg-cache/evolution/tmp:ro
 # We're waiting for webcam support: https://github.com/flatpak/xdg-desktop-portal/issues/38;
 # we use --device=all meanwhile. We do network, because we're opening a port.
 build-options:
