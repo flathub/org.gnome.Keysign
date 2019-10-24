@@ -1,0 +1,39 @@
+{
+    "name": "python3-BabelGladeExtractor",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} BabelGladeExtractor"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/e7/f9/f0b53f88060247251bf481fa6ea62cd0d25bf1b11a87888e53ce5b7c8ad2/pytz-2019.3-py2.py3-none-any.whl",
+            "sha256": "1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/82/c3/534ddba230bd4fbbd3b7a3d35f3341d014cca213f369a9940925e7e5f691/pytz-2019.3.tar.gz",
+            "sha256": "b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c4/43/3f1e7d742e2a7925be180b6af5e0f67d38de2f37560365ac1a0b9a04c015/lxml-4.4.1.tar.gz",
+            "sha256": "c81cb40bff373ab7a7446d6bbca0190bccc5be3448b47b51d729e37799bb5692"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/2c/60/f2af68eb046c5de5b1fe6dd4743bf42c074f7141fe7b2737d3061533b093/Babel-2.7.0-py2.py3-none-any.whl",
+            "sha256": "af92e6106cb7c55286b25b38ad7695f8b4efb36a90ba483d7f7a6628c46158ab"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/bd/78/9fb975cbb3f4b136de2cd4b5e5ce4a3341169ebf4c6c03630996d05428f1/Babel-2.7.0.tar.gz",
+            "sha256": "e86135ae101e31e2c8ec20a4e0c5220f4eed12487d5cf3f78be7e98d3a57fc28"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/85/bf/9e64c51c974dd82e79e6d729cddc9dc8c89a95c021ee4d4cd484eb0c9cff/BabelGladeExtractor-0.5.1.tar.bz2",
+            "sha256": "49e9d1630cd0041bbd80a05a376078c48375bbda463eb4b0a2c11331cab9a219"
+        }
+    ]
+}
