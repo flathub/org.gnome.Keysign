@@ -262,3 +262,6 @@ modules:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.2.0/gnome-keysign-1.2.0.tar.gz
         sha256: 81e404a535ea94e5dde699ea386d795cfc1494bbcd6f28fb6940b9fa7da9f5b1
+
+      - type: patch
+        path: 0001-setup-import-translate_appdata_file-and-translate_de.patch

@@ -1,0 +1,27 @@
+From 3efa0b1cd98625e31f2455f547504574a4547001 Mon Sep 17 00:00:00 2001
+From: Tobias Mueller <muelli@cryptobitch.de>
+Date: Thu, 24 Oct 2019 13:16:35 +0200
+Subject: [PATCH] setup: import translate_appdata_file and
+ translate_desktop_file
+
+oops. This hopefully fixes an installation error.
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 662117b..456f967 100644
+--- a/setup.py
++++ b/setup.py
+@@ -34,7 +34,7 @@ class BuildWithCompile(build):
+     sub_commands = [('compile_catalog', None)] + build.sub_commands
+ 
+     def run(self):
+-        # from babelglade import translate_desktop_file
++        from babelglade.translate import translate_desktop_file, translate_appdata_file
+         translate_desktop_file('data/org.gnome.Keysign.raw.desktop', 'data/org.gnome.Keysign.desktop', 'keysign/locale')
+         translate_appdata_file('data/org.gnome.Keysign.raw.appdata.xml', 'data/org.gnome.Keysign.appdata.xml', 'keysign/locale')
+         build.run(self)
+-- 
+2.17.1
+
