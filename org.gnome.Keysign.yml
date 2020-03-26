@@ -21,6 +21,8 @@ finish-args:
   # And Evolution might be capable of sending the whole email via the clipboard: https://gitlab.gnome.org/GNOME/evolution/issues/618
   # Until any of that has landed, we make the folder read-only.
   - --filesystem=xdg-cache/evolution/tmp:ro
+  - --filesystem=~/.claws-mail/tmp/:ro
+
 # We're waiting for webcam support: https://github.com/flatpak/xdg-desktop-portal/issues/38;
 # we use --device=all meanwhile. We do network, because we're opening a port.
 build-options:
