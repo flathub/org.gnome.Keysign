@@ -7,8 +7,9 @@ copy-icon: true
 finish-args:
   - --share=ipc
   - --socket=x11
-  - --socket=fallback-x11
-  - --socket=wayland
+  # We are not Wayland ready yet, because of Twisted: https://github.com/flathub/org.gnome.Keysign/issues/14
+  #- --socket=fallback-x11
+  #- --socket=wayland
   - --share=network
   - --system-talk-name=org.freedesktop.Avahi
   - --system-talk-name=org.bluez
