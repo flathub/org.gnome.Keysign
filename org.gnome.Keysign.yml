@@ -221,8 +221,9 @@ modules:
     - type: patch
       path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
 
-  # ~/vcs/flatpak-builder-tools/pip/flatpak-pip-generator --requirements-file requirements.txt --runtime org.gnome.Sdk//3.38 --output generated-sources
-  - generated-sources.json
+  # flatpak-pip-generator  --runtime org.gnome.Sdk//3.38 --build-isolation  requests  qrcode  twisted[tls]   future  magic-wormhole
+  # as parsing requirements.txt doesn't seem to work O_o
+  - python3-modules.json
 
   - name: gnome-keysign
     no-autogen: true
