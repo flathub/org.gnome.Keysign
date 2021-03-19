@@ -41,18 +41,6 @@ cleanup:
   - "*.la"
   - "*.a"
 modules:
-  - name: python3-pytz
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pytz
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/af/be/6c59e30e208a5f28da85751b93ec7b97e4612268bb054d0dff396e758a90/pytz-2018.9.tar.gz
-        sha256: d5f05e487007e29e03409f9398d074e158d920d36eb82eaf66fb1136b0c5374c
-
   - name: swig
     config-opts:
       - "--without-boost"
@@ -194,73 +182,11 @@ modules:
                 url: https://github.com/ImageMagick/ImageMagick/archive/7.0.8-12.tar.gz
                 sha256: cd3a25183d433f3ad4f8ed6301c5ae5dfb0959c1f09b059acee447bb3881bf99
 
-  - name: python3-babel
-    buildsystem: simple
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} babel
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/be/cc/9c981b249a455fa0c76338966325fc70b7265521bad641bf2932f77712f4/Babel-2.6.0.tar.gz
-        sha256: 8cba50f48c529ca3fa18cf81fa9403be176d374ac4d60738b839122dfaaa3d23
-
-  - name: python3-six
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} six
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/dd/bf/4138e7bfb757de47d1f4b6994648ec67a51efe58fa907c1e11e350cddfca/six-1.12.0.tar.gz
-        sha256: d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73
-
-  - name: python3-qrcode
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} qrcode
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/8d/b6/beed3d50e1047a2aa6437d3a653e5f31feb7f4de8bc054299dc205682e41/qrcode-6.0.tar.gz
-        sha256: 037b0db4c93f44586e37f84c3da3f763874fcac85b2974a69a98e399ac78e1bf
-
-  - name: python3-requests
-    buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} requests
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/55/54/3ce77783acba5979ce16674fc98b1920d00b01d337cfaaf5db22543505ed/certifi-2018.11.29.tar.gz
-        sha256: 47f9c83ef4c0c621eaef743f133f09fa8a74a9b75f037e8624f83bd1b6626cb7
-      - type: file
-        url: https://files.pythonhosted.org/packages/b1/53/37d82ab391393565f2f831b8eedbffd57db5a718216f82f1a8b4d381a1c1/urllib3-1.24.1.tar.gz
-        sha256: de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22
-      - type: file
-        url: https://files.pythonhosted.org/packages/ad/13/eb56951b6f7950cadb579ca166e448ba77f9d24efc03edd7e55fa57d04b7/idna-2.8.tar.gz
-        sha256: c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407
-      - type: file
-        url: https://files.pythonhosted.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz
-        sha256: 84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae
-      - type: file
-        url: https://files.pythonhosted.org/packages/52/2c/514e4ac25da2b08ca5a464c50463682126385c4272c18193876e91f4bc38/requests-2.21.0.tar.gz
-        sha256: 502a824f31acdacb3a35b6690b5fbf0bc41d63a24a45c4004352b0242707598e
-
   - name: gpgme
     sources:
       - type: archive
         url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
         sha256: b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8
-
-  - python3-wheel.json
-  - twisted[tls].yml
-
-  - magic-wormhole.yml
 
   - name: libical
     cleanup:
@@ -295,40 +221,8 @@ modules:
     - type: patch
       path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
 
-  - name: python3-pybluez
-    buildsystem: simple
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pybluez
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/c1/98/3149481d508bee174335be6725880f00d297afebe75c15e917af8f6fe169/PyBluez-0.22.zip
-        sha256: 4ce006716a54d9d18e8186a3f1c8b12a8e6befecffe8fd5828a291fb694ce49d
-
-  - name: python3-lxml
-    buildsystem: simple
-    build-options:
-      env:
-        XSLT_CONFIG: pkg-config libxslt
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} lxml
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/16/4a/b085a04d6dad79aa5c00c65c9b2bbcb2c6c22e5ac341e7968e0ad2c57e2f/lxml-4.3.0.tar.gz
-        sha256: d1e111b3ab98613115a208c1017f266478b0ab224a67bc8eac670fa0bad7d488
-
-  - name: python3-future
-    buildsystem: simple
-    build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} future
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/90/52/e20466b85000a181e1e144fd8305caf2cf475e2f9674e797b222f8105f5f/future-0.17.1.tar.gz
-        sha256: 67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8
-
-  - python3-BabelGladeExtractor.json
+  # ~/vcs/flatpak-builder-tools/pip/flatpak-pip-generator --requirements-file requirements.txt --runtime org.gnome.Sdk//3.38 --output generated-sources
+  - generated-sources.json
 
   - name: gnome-keysign
     no-autogen: true
