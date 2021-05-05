@@ -222,7 +222,8 @@ modules:
       path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
 
   # flatpak-pip-generator --runtime org.gnome.Sdk//40 requests qrcode incremental m2r setuptools_scm \
-  # Automat cryptography==3.3.2 "twisted[tls]" future humanize==1.1.0 magic-wormhole BabelGladeExtractor
+  # Automat cryptography==3.3.2 "twisted[tls]" future humanize==1.1.0 magic-wormhole \
+  # BabelGladeExtractor PyBluez
   # as parsing requirements.txt doesn't seem to work O_o
   # cryptography versions newer than 3.3.2 requires additional rust dependecies, start by using this version for now
   # humanize versions newer than 1.1.0 fails to install because pip complains that the metadata version is '0.0.0'
