@@ -52,15 +52,13 @@ modules:
 
   - name: python3-dbus-python
     buildsystem: simple
-    ensure-writable:
-      - easy-install.pth
-      - setuptools.pth
     build-commands:
-      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} dbus-python
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} "dbus-python" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/3f/e7/4edb582d1ffd5ac3c84188deea32e960b5c8c0fe1da56ce70224f85ce542/dbus-python-1.2.8.tar.gz
-        sha256: abf12bbb765e300bf8e2a1b2f32f85949eab06998dbda127952c31cb63957b6f
+        url: https://files.pythonhosted.org/packages/b1/5c/ccfc167485806c1936f7d3ba97db6c448d0089c5746ba105b6eb22dba60e/dbus-python-1.2.18.tar.gz
+        sha256: 92bdd1e68b45596c833307a5ff4b217ee6929a1502f5341bae28fd120acf7260
 
 
 
@@ -144,49 +142,53 @@ modules:
         - -Dwinks=disabled
         - -Dwinscreencap=disabled
         - -Dwpe=disabled
+        - -Dx265=disabled
         - -Dzbar=enabled
         - -Dzxing=enabled
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.16.3.tar.xz
-        sha256: 84efe57011658f0a53a5d5b20f64ef109f5105dccb0808c21e069e946673514d
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.18.6.tar.xz
+        sha256: 0b1b50ac6311f0c510248b6cd64d6d3c94369344828baa602db85ded5bc70ec9
 
     modules:
-      - name: zbar
-        build-options:
-          config-opts:
-            - "--disable-video"
-            - "--without-xv"
-            - "--without-python2"
-            - "--without-gtk"
-            - "--without-qt"
+      - name: zxing
+        config-opts:
+        - "-DBUILD_SHARED_LIBS=ON"
+        - "-DBUILD_EXAMPLES=OFF"
+        - "-DBUILD_BLACKBOX_TESTS=OFF"
+        - "-DBUILD_UNIT_TESTS=OFF"
+        buildsystem: cmake-ninja
+        builddir: true
         sources:
           - type: git
-            url: git://git.linuxtv.org/zbar.git
-            commit: edcf08b49e0a5fe71c18fa9d4b8ed83ed8fc9082
-          - type: shell
-            commands:
-                # Patch for Imagemagick 7 https://git.archlinux.org/svntogit/community.git/tree/trunk/imagemagick7.patch?h=packages/zbar&id=f80dc934f730ee4204dc51f3ef47cd2ec7406898
-                - sed -i 's|wand/MagickWand.h|MagickWand/MagickWand.h|g' configure.ac
-                - sed -i 's|wand/MagickWand.h|MagickWand/MagickWand.h|g' zbarimg/zbarimg.c
-                # Avoid documentation
-                - sed -i '48d' Makefile.am
-          - type: script
-            dest-filename: autogen.sh
-            commands:
-                - autoreconf -vfi -W none
+            url: https://github.com/nu-book/zxing-cpp
+            tag: "v1.2.0"
+            commit: 2dad8be2466a2bd46037267d9f0e728e08b79140
+      - name: zbar
+        config-opts:
+        - "--disable-doc"
+        - "--disable-video"
+        - "--with-python=python3"
+        - "--without-dbus"
+        - "--without-xv"
+        - "--without-gtk"
+        - "--without-qt"
+        sources:
+          - type: archive
+            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.90.tar.gz
+            sha256: ff857dd7e3dbe043dac3765b5182c91dfd0477800713a75d15287d797cee60fa
         modules:
           - name: ImageMagick
             sources:
               - type: archive
-                url: https://github.com/ImageMagick/ImageMagick/archive/7.0.8-12.tar.gz
-                sha256: cd3a25183d433f3ad4f8ed6301c5ae5dfb0959c1f09b059acee447bb3881bf99
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.0-31.tar.gz
+                sha256: 2d1903f2444cf26d060c64a94b97a0b0b59055f38261d03131e468b58153883b
 
   - name: gpgme
     sources:
       - type: archive
-        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
-        sha256: b4dc951c3743a60e2e120a77892e9e864fb936b2e58e7c77e8581f4d050e8cd8
+        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
+        sha256: 711eabf5dd661b9b04be9edc9ace2a7bc031f6bd9d37a768d02d0efdef108f5f
 
   - name: libical
     cleanup:
@@ -197,12 +199,13 @@ modules:
     - "-DBUILD_SHARED_LIBS:BOOL=ON"
     sources:
     - type: archive
-      url: https://github.com/libical/libical/archive/v3.0.5.tar.gz
-      sha256: 483acbf7fee66ca071c2ff8183e46b6f2b3a89e1e866eadf4870eaaa281c8db1
+      url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
+      sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
 
   - name: bluez
     config-opts:
     - "--disable-datafiles"
+    - "--disable-manpages"
     - "--disable-systemd"
     - "--enable-experimental"
     - "--enable-library"
@@ -215,17 +218,15 @@ modules:
     - "--sysconfdir=/app/etc"
     sources:
     - type: archive
-      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.50.tar.xz
-      sha256: 5ffcaae18bbb6155f1591be8c24898dc12f062075a40b538b745bfd477481911
-
-    - type: patch
-      path: cf7d8a23325784ffc1fc48aa11171e3068c3ace5..f36f71f60b1e68c0f12e615b9b128d089ec3dd19.patch
+      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.64.tar.xz
+      sha256: ae437e65b6b3070c198bc5b0109fe9cdeb9eaa387380e2072f9de65fe8a1de34
 
   # flatpak-pip-generator --runtime org.gnome.Sdk//40 requests qrcode incremental m2r setuptools_scm \
   # Automat cryptography==3.3.2 "twisted[tls]" future humanize magic-wormhole \
   # BabelGladeExtractor PyBluez
   # as parsing requirements.txt doesn't seem to work O_o
   # cryptography versions newer than 3.3.2 requires additional rust dependecies, start by using this version for now
+  # PyBluez has been changed to the latest dev version to fix issue with "use_2to3" https://github.com/pybluez/pybluez/issues/431#issuecomment-1107884273
   - python3-modules.json
 
   - name: gnome-keysign
