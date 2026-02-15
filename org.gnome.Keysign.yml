@@ -214,8 +214,13 @@ modules:
   - name: gpgme
     sources:
       - type: archive
-        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
-        sha256: 711eabf5dd661b9b04be9edc9ace2a7bc031f6bd9d37a768d02d0efdef108f5f
+        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.24.3.tar.bz2
+        sha512: 3b5fc22a2f83576058ac14e744333f46df362b39f742d6c9e54a5a66828194a1312f5f365bdc15683e148821f5d591fa92a2daad83fc116f65dccf14e817ca48
+        x-checker-data:
+          type: anyita
+          project-id: 1239
+          stable-only: True
+          url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
 
   - name: bluez
     config-opts:
