@@ -189,8 +189,14 @@ modules:
         - "--without-qt"
         sources:
           - type: archive
-            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.90.tar.gz
-            sha256: ff857dd7e3dbe043dac3765b5182c91dfd0477800713a75d15287d797cee60fa
+            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.93.tar.gz
+            sha512: 61ac8d50c5d236f996cf60221198e3b9357329a9ecda67b29495001f59055ae0124fb1dd70c6ec075eb96eb2ef42c22604a447c9203126f9d0f8108a4e268056
+            x-checker-data:
+              type: json
+              url: https://api.github.com/repos/mchehab/zbar/releases/latest
+              version-query: ".tag_name"
+              url-query: ".tag_name | sub(\"^\"; \"https://linuxtv.org/downloads/zbar/zbar-\") | sub(\"$\"; \".tar.gz\")"
+
         modules:
           - name: imagemagick
             config-opts:
