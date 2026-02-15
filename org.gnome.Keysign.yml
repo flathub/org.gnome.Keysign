@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '42'
+runtime-version: '48'
 sdk: org.gnome.Sdk
 command: gnome-keysign
 copy-icon: true
