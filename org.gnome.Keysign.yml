@@ -190,18 +190,6 @@ modules:
         url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
         sha256: 711eabf5dd661b9b04be9edc9ace2a7bc031f6bd9d37a768d02d0efdef108f5f
 
-  - name: libical
-    cleanup:
-    - "/lib/cmake"
-    buildsystem: cmake
-    config-opts:
-    - "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib"
-    - "-DBUILD_SHARED_LIBS:BOOL=ON"
-    sources:
-    - type: archive
-      url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
-      sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
-
   - name: bluez
     config-opts:
     - "--disable-datafiles"
@@ -220,6 +208,20 @@ modules:
     - type: archive
       url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.64.tar.xz
       sha256: ae437e65b6b3070c198bc5b0109fe9cdeb9eaa387380e2072f9de65fe8a1de34
+
+    modules:
+    - name: libical
+      cleanup:
+      - "/lib/cmake"
+      buildsystem: cmake
+      config-opts:
+      - "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib"
+      - "-DBUILD_SHARED_LIBS:BOOL=ON"
+      sources:
+      - type: archive
+        url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
+        sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
+
 
   # flatpak-pip-generator --runtime org.gnome.Sdk//40 requests qrcode incremental m2r setuptools_scm \
   # Automat cryptography==3.3.2 "twisted[tls]" future humanize magic-wormhole \
