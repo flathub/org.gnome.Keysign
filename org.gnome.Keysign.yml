@@ -192,11 +192,24 @@ modules:
             url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.90.tar.gz
             sha256: ff857dd7e3dbe043dac3765b5182c91dfd0477800713a75d15287d797cee60fa
         modules:
-          - name: ImageMagick
+          - name: imagemagick
+            config-opts:
+              - --enable-shared
+              - --disable-static
+              - --disable-docs
+              - --with-modules
+              - --with-threads
             sources:
               - type: archive
-                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.0-31.tar.gz
-                sha256: 2d1903f2444cf26d060c64a94b97a0b0b59055f38261d03131e468b58153883b
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-12.tar.gz
+                sha512: 6a1de1e41ccddaee3832876b406ffc444c4cadfe79124879f85e9ac0eae4edf956111d08f9004548b1c0b2f19117fa6fa4bceae82248826a11919e195df939e5
+                x-checker-data:
+                  type: anitya
+                  project-id: 1372
+                  stable-only: true
+                  url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
+            cleanup:
+              - /bin/*-config
 
   - name: gpgme
     sources:
