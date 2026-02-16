@@ -1,0 +1,33 @@
+# Generated with flatpak-pip-generator --runtime org.gnome.Sdk//48 --checker-data --yaml --output python3-pyopenssl pyopenssl==22.1.0
+name: python3-pyopenssl
+buildsystem: simple
+build-commands:
+- pip3 install --verbose --upgrade --exists-action=i --no-index --find-links="file://${PWD}"
+  --prefix=${FLATPAK_DEST} "pyopenssl==22.1.0" --no-build-isolation
+sources:
+- type: file
+  url: https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz
+  sha256: 44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529
+  x-checker-data:
+    name: cffi
+    type: pypi
+- type: file
+  url: https://files.pythonhosted.org/packages/e3/3f/41186b1f2fd86a542d399175f6b8e43f82cd4dfa51235a0b030a042b811a/cryptography-38.0.4.tar.gz
+  sha256: 175c1a818b87c9ac80bb7377f5520b7f31b3ef2a0004e2420319beadedb67290
+  x-checker-data:
+    name: cryptography
+    type: pypi
+- type: file
+  url: https://files.pythonhosted.org/packages/00/3f/ea5cfb789dddb327e6d2cf9377c36d9d8607af85530af0e7001165587ae7/pyOpenSSL-22.1.0-py3-none-any.whl
+  sha256: b28437c9773bb6c6958628cf9c3bebe585de661dba6f63df17111966363dd15e
+  x-checker-data:
+    name: pyopenssl
+    packagetype: bdist_wheel
+    type: pypi
+- type: file
+  url: https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-3.0-py3-none-any.whl
+  sha256: b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992
+  x-checker-data:
+    name: pycparser
+    packagetype: bdist_wheel
+    type: pypi

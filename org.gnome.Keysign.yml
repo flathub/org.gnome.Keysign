@@ -279,6 +279,12 @@ modules:
   # PyBluez has been changed to the latest dev version to fix issue with "use_2to3" https://github.com/pybluez/pybluez/issues/431#issuecomment-1107884273
   - python3-modules.json
 
+  # This is quick-fix to make it work. We should not simply install over the existing twisted but rather update all those deps
+  - python3-twisted.yaml
+  - python3-cryptography38.yaml
+  - python3-pyopenssl.yaml
+  - python3-wormhole.yaml
+
   - name: gnome-keysign
     no-autogen: true
     buildsystem: simple
