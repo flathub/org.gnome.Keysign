@@ -67,7 +67,7 @@ modules:
         - -Ddoc=disabled
         - -Dpackage-origin="gnome-keysign-flatpak-manifest"
         # Strange that we have to set libdir ourselves; the flatpak-meson is patched, I thought
-        - -Dlibdir=lib
+        - --libdir=/app/lib
 
         ## We don't need those plugins
         - -Daom=disabled
