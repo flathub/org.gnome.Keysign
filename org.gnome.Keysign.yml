@@ -159,6 +159,8 @@ modules:
         - "-DBUILD_EXAMPLES=OFF"
         - "-DBUILD_BLACKBOX_TESTS=OFF"
         - "-DBUILD_UNIT_TESTS=OFF"
+        # It installs in lib64 unless we overwrite libdir
+        - "-DCMAKE_INSTALL_LIBDIR=lib"
         buildsystem: cmake-ninja
         builddir: true
         sources:
