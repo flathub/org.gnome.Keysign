@@ -230,6 +230,8 @@ modules:
         config-opts:
           - "--without-boost"
           - "--without-pcre"
+          - "--without-perl5"
+          - "--without-javascript"
         sources:
           - type: archive
             url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
