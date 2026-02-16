@@ -149,6 +149,7 @@ modules:
     modules:
       - name: zxing
         config-opts:
+        - -DCMAKE_BUILD_TYPE=RelWithDebug
         - "-DBUILD_SHARED_LIBS=ON"
         - "-DBUILD_EXAMPLES=OFF"
         - "-DBUILD_BLACKBOX_TESTS=OFF"
