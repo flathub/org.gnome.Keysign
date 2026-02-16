@@ -151,6 +151,13 @@ modules:
           versions:
             <: 1.25.0
 
+    run-tests: True
+    test-commands:
+      - env PAGER=cat   gst-inspect-1.0  zbar
+    post-install:
+      - env PAGER=cat   gst-inspect-1.0  frei0r
+      - env PAGER=cat   gst-inspect-1.0  zbar
+
     modules:
       - name: zxing
         config-opts:
