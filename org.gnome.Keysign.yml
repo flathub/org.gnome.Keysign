@@ -140,6 +140,11 @@ modules:
         - -Dwpe=disabled
         - -Dx265=disabled
 
+    run-tests: true
+    test-commands:
+      - env PAGER=cat   gst-inspect-1.0  frei0r
+      - env PAGER=cat   gst-inspect-1.0  zbar
+
     sources:
       - type: archive
         url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.24.12.tar.xz
@@ -150,13 +155,6 @@ modules:
           url-template: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$version.tar.xz
           versions:
             <: 1.25.0
-
-    run-tests: True
-    test-commands:
-      - env PAGER=cat   gst-inspect-1.0  zbar
-    post-install:
-      - env PAGER=cat   gst-inspect-1.0  frei0r
-      - env PAGER=cat   gst-inspect-1.0  zbar
 
     modules:
       - name: zxing
