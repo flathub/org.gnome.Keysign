@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<component type="desktop-application">
+  <!--Created with jdAppStreamEdit 9.2-->
+  <id>org.gnome.Keysign</id>
+  <name>Keysign</name>
+  <summary>OpenPGP Keysigning helper</summary>
+  <developer id="online.tobias-mueller">
+    <name>Tobias Mueller</name>
+  </developer>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <update_contact>tobiasmue@gnome.org</update_contact>
+  <project_group>GNOME</project_group>
+  <description>
+    <p>GNOME Keysign allows signing OpenPGP keys comfortably and securely
+      via the local network or Bluetooth.</p>
+    <p>It can scan another key's barcode and transfer the key securely,
+      allowing for casual two-party key signing sessions.
+      It follows best practises by sending the encrypted signatures
+      to the UIDs of a key using the Email client the user configured
+      to use.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Receive page</caption>
+      <image type="source">https://wiki.gnome.org/attachments/Apps(2f)Keysign/receive.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Send page</caption>
+      <image type="source">https://wiki.gnome.org/attachments/Apps(2f)Keysign/send.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.2.0" date="2019-10-23" type="stable">
+      <description>
+        <p>
+         * Fix error stemming from removing the crashing gpgme detection
+         * build: Unvendorise babel-glade python module
+         * change email message to facilitate usage of certifications
+        </p>
+      </description>
+    </release>
+    <release version="1.1.1" date="2019-09-13" type="stable">
+      <description>
+        <p>
+         * Allow to drag and drop an email or its attachment into the app
+         * show options to save produced certification as a file
+         * Added a tooltip to the Internet button
+         * Change logo to a wax seal
+         * select usable private keys for signing, only
+         * made appdata file validate under stricter requirements
+        </p>
+      </description>
+​    </release>
+    <release version="1.0.1" date="2019-01-21" type="stable">
+      <description>
+        <p>
+         * fixed up appdata
+         * Cater for newer wormhole close() semantics
+        </p>
+      </description>
+​    </release>
+    <release version="1.0.0" date="2019-01-08" type="stable">
+      <description>
+        <p>
+         * Run with python3 from the desktop file
+         * Removed monkeysign support
+         * Stop installing gks-qrcode
+         * Increased Python2 support in the tests
+         * Fixed stopping wormhole discovery
+         * Ship a new icon for the app
+         * Removed gpgmh wrapper module
+        </p>
+      </description>
+​    </release>
+    <release version="0.9.9" date="2018-08-30" type="stable">
+      <description>
+        <p>Transfer keys via the Internet through Magic Wormhole</p>
+      </description>
+​    </release>
+    <release version="0.9.8" date="2018-07-04" type="stable">
+      <description>
+        <p>Check for Bluetooth in a separate thread, detect powered off Bluetooth device, do not show offline keys</p>
+      </description>
+​    </release>
+    <release version="0.9.7.2" date="2018-05-17" type="stable">
+      <description>
+        <p>Made Appdata go into right places</p>
+      </description>
+​    </release>
+    <release version="0.9.5" date="2017-10-03" type="stable">
+      <description>
+        <p>Add Bluetooth support</p>
+        <p>Default to gpgme</p>
+      </description>
+​    </release>
+  </releases>
+  <url type="homepage">https://wiki.gnome.org/Apps/Keysign</url>
+  <url type="bugtracker">https://github.com/gnome-keysign/gnome-keysign/issues</url>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-contacts">intense</content_attribute>
+  </content_rating>
+  <launchable type="desktop-id">org.gnome.Keysign.desktop</launchable>
+  <translation type="gettext">gnome-keysign</translation>
+</component>

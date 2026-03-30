@@ -421,7 +421,10 @@
             "name": "python3-BabelGladeExtractor",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"BabelGladeExtractor\" --no-build-isolation"
+            	"pip3 freeze",
+            	"pip3 wheel --no-build-isolation --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\"   BabelGladeExtractor*.tar.bz2",
+            	"ls -la",
+                "pip3 install --no-build-isolation --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"BabelGladeExtractor\" --no-build-isolation"
             ],
             "sources": [
                 {

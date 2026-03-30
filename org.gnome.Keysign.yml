@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '42'
+runtime-version: '48'
 sdk: org.gnome.Sdk
 command: gnome-keysign
 copy-icon: true
@@ -21,7 +21,8 @@ finish-args:
   # There might be a copy-and-paste portal: https://github.com/flatpak/xdg-desktop-portal/issues/99
   # And Evolution might be capable of sending the whole email via the clipboard: https://gitlab.gnome.org/GNOME/evolution/issues/618
   # Until any of that has landed, we make the folder read-only.
-  - --filesystem=xdg-cache/evolution/tmp:ro
+  # Now we need to disable it to get past the linter
+  #- --filesystem=xdg-cache/evolution/tmp:ro
   - --filesystem=~/.claws-mail/tmp/:ro
 
 # We're waiting for webcam support: https://github.com/flatpak/xdg-desktop-portal/issues/38;
@@ -41,15 +42,6 @@ cleanup:
   - "*.la"
   - "*.a"
 modules:
-  - name: swig
-    config-opts:
-      - "--without-boost"
-      - "--without-pcre"
-    sources:
-      - type: archive
-        url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
-        sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
-
   - name: python3-dbus-python
     buildsystem: simple
     build-commands:
@@ -63,15 +55,26 @@ modules:
 
 
   - name: gst-plugins-bad
+    #disabled: true
     buildsystem: meson
     config-opts:
+        - -Dzbar=enabled
+        - -Dzxing=enabled
+        - -Dgpl=enabled
         - -Dexamples=disabled
+        - -Dtests=disabled
+        - -Dexamples=disabled
+        - -Ddoc=disabled
+        - -Dpackage-origin="gnome-keysign-flatpak-manifest"
+        # Strange that we have to set libdir ourselves; the flatpak-meson is patched, I thought
+        - --libdir=/app/lib
+
+        ## We don't need those plugins
         - -Daom=disabled
         - -Davtp=disabled
         - -Dbs2b=disabled
         - -Dchromaprint=disabled
         - -Dcolormanagement=disabled
-        - -Dcuda=disabled
         - -Dcurl-ssh2=disabled
         - -Dcurl=disabled
         - -Dd3dvideosink=disabled
@@ -93,7 +96,6 @@ modules:
         - -Diqa=disabled
         - -Dladspa=disabled
         - -Dlibde265=disabled
-        - -Dlibmms=disabled
         - -Dlv2=disabled
         - -Dmagicleap=disabled
         - -Dmicrodns=disabled
@@ -104,9 +106,6 @@ modules:
         - -Dmusepack=disabled
         - -Dneon=disabled
         - -Dnvcodec=disabled
-        - -Dnvdec=disabled
-        - -Dnvenc=disabled
-        - -Dofa=disabled
         - -Dopenal=disabled
         - -Dopencv=disabled
         - -Dopenexr=disabled
@@ -128,8 +127,6 @@ modules:
         - -Dteletext=disabled
         - -Dtinyalsa=disabled
         - -Dva=disabled
-        - -Dvaacenc=disabled
-        - -Dvdpau=disabled
         - -Dvoaacenc=disabled
         - -Dvoamrwbenc=disabled
         - -Dvulkan=disabled
@@ -143,27 +140,48 @@ modules:
         - -Dwinscreencap=disabled
         - -Dwpe=disabled
         - -Dx265=disabled
-        - -Dzbar=enabled
-        - -Dzxing=enabled
+
+    run-tests: true
+    test-commands:
+      - env PAGER=cat   gst-inspect-1.0  frei0r
+      - env PAGER=cat   gst-inspect-1.0  zbar
+
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.18.6.tar.xz
-        sha256: 0b1b50ac6311f0c510248b6cd64d6d3c94369344828baa602db85ded5bc70ec9
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.24.12.tar.xz
+        sha512: 00212ab3f80f4dd3a007e0d44245196ddcf6cf91b0bb4a39bc12da32d5680ba12a9132a500d520ca6973375c2480f7ff07138aa34a602631186450b83942574e
+        x-checker-data:
+          type: anitya
+          project-id: 21849
+          url-template: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$version.tar.xz
+          versions:
+            <: 1.25.0
 
     modules:
       - name: zxing
         config-opts:
+        - -DCMAKE_BUILD_TYPE=RelWithDebug
         - "-DBUILD_SHARED_LIBS=ON"
         - "-DBUILD_EXAMPLES=OFF"
         - "-DBUILD_BLACKBOX_TESTS=OFF"
         - "-DBUILD_UNIT_TESTS=OFF"
+        # It installs in lib64 unless we overwrite libdir
+        - "-DCMAKE_INSTALL_LIBDIR=lib"
         buildsystem: cmake-ninja
         builddir: true
         sources:
           - type: git
-            url: https://github.com/nu-book/zxing-cpp
-            tag: "v1.2.0"
-            commit: 2dad8be2466a2bd46037267d9f0e728e08b79140
+            url: https://github.com/zxing-cpp/zxing-cpp
+            tag: "v1.4.0"
+            commit: f89db69e34543c508f80e807535dab3012eea7ad
+            x-checker-data:
+              type: anitya
+              project-id: 376699,
+              stable-only: true,
+              url-template: "https://github.com/zxing-cpp/zxing-cpp/archive/v$version.tar.gz"
+              versions:
+                "<": 2
+
       - name: zbar
         config-opts:
         - "--disable-doc"
@@ -175,32 +193,56 @@ modules:
         - "--without-qt"
         sources:
           - type: archive
-            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.90.tar.gz
-            sha256: ff857dd7e3dbe043dac3765b5182c91dfd0477800713a75d15287d797cee60fa
+            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.93.tar.gz
+            sha512: 61ac8d50c5d236f996cf60221198e3b9357329a9ecda67b29495001f59055ae0124fb1dd70c6ec075eb96eb2ef42c22604a447c9203126f9d0f8108a4e268056
+            x-checker-data:
+              type: json
+              url: https://api.github.com/repos/mchehab/zbar/releases/latest
+              version-query: ".tag_name"
+              url-query: ".tag_name | sub(\"^\"; \"https://linuxtv.org/downloads/zbar/zbar-\") | sub(\"$\"; \".tar.gz\")"
+
         modules:
-          - name: ImageMagick
+          - name: imagemagick
+            config-opts:
+              - --enable-shared
+              - --disable-static
+              - --disable-docs
+              - --with-modules
+              - --with-threads
             sources:
               - type: archive
-                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.0-31.tar.gz
-                sha256: 2d1903f2444cf26d060c64a94b97a0b0b59055f38261d03131e468b58153883b
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-12.tar.gz
+                sha512: 6a1de1e41ccddaee3832876b406ffc444c4cadfe79124879f85e9ac0eae4edf956111d08f9004548b1c0b2f19117fa6fa4bceae82248826a11919e195df939e5
+                x-checker-data:
+                  type: anitya
+                  project-id: 1372
+                  stable-only: true
+                  url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
+            cleanup:
+              - /bin/*-config
 
   - name: gpgme
     sources:
       - type: archive
-        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
-        sha256: 711eabf5dd661b9b04be9edc9ace2a7bc031f6bd9d37a768d02d0efdef108f5f
+        url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.24.3.tar.bz2
+        sha512: 3b5fc22a2f83576058ac14e744333f46df362b39f742d6c9e54a5a66828194a1312f5f365bdc15683e148821f5d591fa92a2daad83fc116f65dccf14e817ca48
+        x-checker-data:
+          type: anyita
+          project-id: 1239
+          stable-only: True
+          url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
+    modules:
+      - name: swig
+        config-opts:
+          - "--without-boost"
+          - "--without-pcre"
+          - "--without-perl5"
+          - "--without-javascript"
+        sources:
+          - type: archive
+            url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
+            sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
 
-  - name: libical
-    cleanup:
-    - "/lib/cmake"
-    buildsystem: cmake
-    config-opts:
-    - "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib"
-    - "-DBUILD_SHARED_LIBS:BOOL=ON"
-    sources:
-    - type: archive
-      url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
-      sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
 
   - name: bluez
     config-opts:
@@ -219,7 +261,33 @@ modules:
     sources:
     - type: archive
       url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.64.tar.xz
-      sha256: ae437e65b6b3070c198bc5b0109fe9cdeb9eaa387380e2072f9de65fe8a1de34
+      sha512: f11f9974b29c5c6fce3890d7e42425c1cb02e42c1b8f49c5cc4b249234e67b64317d0e5e82721e2fbf1b53269c8569a9c869d59ce42b5e927f6622f0753e53cd
+      x-checker-data:
+        type: anitya
+        project-id: 10029
+        url-template: http://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
+
+    modules:
+      - name: libical
+        cleanup:
+          - /lib/cmake
+        buildsystem: cmake-ninja
+        config-opts:
+          - -DCMAKE_BUILD_TYPE=RelWithDebug
+          - -DCMAKE_INSTALL_LIBDIR=lib
+          - -DBUILD_SHARED_LIBS:BOOL=ON
+          - -DICAL_GLIB=true
+          - -DGOBJECT_INTROSPECTION=true
+          - -DICAL_GLIB_VAPI=true
+          - -DICAL_BUILD_DOCS=false
+        sources:
+          - type: archive
+            url: https://github.com/libical/libical/releases/download/v3.0.20/libical-3.0.20.tar.gz
+            sha512: 2506320240ba0e4287b6ef1b90b653eacd51105d392b91f8c772f3b0745fecbf55eecfe81f89413cc56106b71ccca780754df31f5190ffce6c372126e27bf1da
+            x-checker-data:
+              type: anitya
+              project-id: 1637
+              url-template: https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz
 
   # flatpak-pip-generator --runtime org.gnome.Sdk//40 requests qrcode incremental m2r setuptools_scm \
   # Automat cryptography==3.3.2 "twisted[tls]" future humanize magic-wormhole \
@@ -229,11 +297,22 @@ modules:
   # PyBluez has been changed to the latest dev version to fix issue with "use_2to3" https://github.com/pybluez/pybluez/issues/431#issuecomment-1107884273
   - python3-modules.json
 
+  # This is quick-fix to make it work. We should not simply install over the existing twisted but rather update all those deps
+  - python3-twisted.yaml
+  - python3-cryptography38.yaml
+  - python3-pyopenssl.yaml
+  - python3-wormhole.yaml
+
   - name: gnome-keysign
     no-autogen: true
+    run-tests: false
+    test-commands:
+      - pytest
     buildsystem: simple
     build-commands:
-      - pip3 install --prefix=${FLATPAK_DEST} .
+      - pip3 freeze
+      - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
+      - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.2.0/gnome-keysign-1.2.0.tar.gz
@@ -241,3 +320,7 @@ modules:
 
       - type: patch
         path: 0001-setup-import-translate_appdata_file-and-translate_de.patch
+
+      - type: file
+        path: org.gnome.Keysign.raw.appdata.xml
+        dest: data
