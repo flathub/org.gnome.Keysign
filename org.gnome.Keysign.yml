@@ -320,3 +320,7 @@ modules:
 
       - type: patch
         path: 0001-setup-import-translate_appdata_file-and-translate_de.patch
+
+      - type: file
+        path: org.gnome.Keysign.raw.appdata.xml
+        dest: data
