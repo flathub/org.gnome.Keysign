@@ -39,8 +39,8 @@ cleanup:
   - /share/man
   - /share/gtk-doc
   - /share/vala
-  - "*.la"
-  - "*.a"
+  - '*.la'
+  - '*.a'
 modules:
   - name: python3-dbus-python
     buildsystem: simple
@@ -58,88 +58,88 @@ modules:
     #disabled: true
     buildsystem: meson
     config-opts:
-        - -Dzbar=enabled
-        - -Dzxing=enabled
-        - -Dgpl=enabled
-        - -Dexamples=disabled
-        - -Dtests=disabled
-        - -Dexamples=disabled
-        - -Ddoc=disabled
-        - -Dpackage-origin="gnome-keysign-flatpak-manifest"
+      - -Dzbar=enabled
+      - -Dzxing=enabled
+      - -Dgpl=enabled
+      - -Dexamples=disabled
+      - -Dtests=disabled
+      - -Dexamples=disabled
+      - -Ddoc=disabled
+      - -Dpackage-origin="gnome-keysign-flatpak-manifest"
         # Strange that we have to set libdir ourselves; the flatpak-meson is patched, I thought
-        - --libdir=/app/lib
+      - --libdir=/app/lib
 
         ## We don't need those plugins
-        - -Daom=disabled
-        - -Davtp=disabled
-        - -Dbs2b=disabled
-        - -Dchromaprint=disabled
-        - -Dcolormanagement=disabled
-        - -Dcurl-ssh2=disabled
-        - -Dcurl=disabled
-        - -Dd3dvideosink=disabled
-        - -Ddash=disabled
-        - -Ddc1394=disabled
-        - -Ddecklink=disabled
-        - -Ddirectfb=disabled
-        - -Ddirectsound=disabled
-        - -Ddoc=disabled
-        - -Ddtls=disabled
-        - -Ddts=disabled
-        - -Dfaac=disabled
-        - -Dfbdev=disabled
-        - -Dfestival=disabled
-        - -Dflite=disabled
-        - -Dfluidsynth=disabled
-        - -Dgme=disabled
-        - -Dgsm=disabled
-        - -Diqa=disabled
-        - -Dladspa=disabled
-        - -Dlibde265=disabled
-        - -Dlv2=disabled
-        - -Dmagicleap=disabled
-        - -Dmicrodns=disabled
-        - -Dmodplug=disabled
-        - -Dmpeg2enc=disabled
-        - -Dmplex=disabled
-        - -Dmsdk=disabled
-        - -Dmusepack=disabled
-        - -Dneon=disabled
-        - -Dnvcodec=disabled
-        - -Dopenal=disabled
-        - -Dopencv=disabled
-        - -Dopenexr=disabled
-        - -Dopenh264=disabled
-        - -Dopenmpt=disabled
-        - -Dopenni2=disabled
-        - -Dopensles=disabled
-        - -Dresindvd=disabled
-        - -Drsvg=disabled
-        - -Drtmp=disabled
-        - -Drtp=disabled
-        - -Dsbc=disabled
-        - -Dsctp=disabled
-        - -Dsndfile=disabled
-        - -Dsoundtouch=disabled
-        - -Dspandsp=disabled
-        - -Dsrt=disabled
-        - -Dsvthevcenc=disabled
-        - -Dteletext=disabled
-        - -Dtinyalsa=disabled
-        - -Dva=disabled
-        - -Dvoaacenc=disabled
-        - -Dvoamrwbenc=disabled
-        - -Dvulkan=disabled
-        - -Dwasapi=disabled
-        - -Dwasapi2=disabled
-        - -Dwebp=disabled
-        - -Dwebrtcdsp=disabled
-        - -Dwebrtc=disabled
-        - -Dwildmidi=disabled
-        - -Dwinks=disabled
-        - -Dwinscreencap=disabled
-        - -Dwpe=disabled
-        - -Dx265=disabled
+      - -Daom=disabled
+      - -Davtp=disabled
+      - -Dbs2b=disabled
+      - -Dchromaprint=disabled
+      - -Dcolormanagement=disabled
+      - -Dcurl-ssh2=disabled
+      - -Dcurl=disabled
+      - -Dd3dvideosink=disabled
+      - -Ddash=disabled
+      - -Ddc1394=disabled
+      - -Ddecklink=disabled
+      - -Ddirectfb=disabled
+      - -Ddirectsound=disabled
+      - -Ddoc=disabled
+      - -Ddtls=disabled
+      - -Ddts=disabled
+      - -Dfaac=disabled
+      - -Dfbdev=disabled
+      - -Dfestival=disabled
+      - -Dflite=disabled
+      - -Dfluidsynth=disabled
+      - -Dgme=disabled
+      - -Dgsm=disabled
+      - -Diqa=disabled
+      - -Dladspa=disabled
+      - -Dlibde265=disabled
+      - -Dlv2=disabled
+      - -Dmagicleap=disabled
+      - -Dmicrodns=disabled
+      - -Dmodplug=disabled
+      - -Dmpeg2enc=disabled
+      - -Dmplex=disabled
+      - -Dmsdk=disabled
+      - -Dmusepack=disabled
+      - -Dneon=disabled
+      - -Dnvcodec=disabled
+      - -Dopenal=disabled
+      - -Dopencv=disabled
+      - -Dopenexr=disabled
+      - -Dopenh264=disabled
+      - -Dopenmpt=disabled
+      - -Dopenni2=disabled
+      - -Dopensles=disabled
+      - -Dresindvd=disabled
+      - -Drsvg=disabled
+      - -Drtmp=disabled
+      - -Drtp=disabled
+      - -Dsbc=disabled
+      - -Dsctp=disabled
+      - -Dsndfile=disabled
+      - -Dsoundtouch=disabled
+      - -Dspandsp=disabled
+      - -Dsrt=disabled
+      - -Dsvthevcenc=disabled
+      - -Dteletext=disabled
+      - -Dtinyalsa=disabled
+      - -Dva=disabled
+      - -Dvoaacenc=disabled
+      - -Dvoamrwbenc=disabled
+      - -Dvulkan=disabled
+      - -Dwasapi=disabled
+      - -Dwasapi2=disabled
+      - -Dwebp=disabled
+      - -Dwebrtcdsp=disabled
+      - -Dwebrtc=disabled
+      - -Dwildmidi=disabled
+      - -Dwinks=disabled
+      - -Dwinscreencap=disabled
+      - -Dwpe=disabled
+      - -Dx265=disabled
 
     run-tests: true
     test-commands:
@@ -148,8 +148,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.24.12.tar.xz
-        sha512: 00212ab3f80f4dd3a007e0d44245196ddcf6cf91b0bb4a39bc12da32d5680ba12a9132a500d520ca6973375c2480f7ff07138aa34a602631186450b83942574e
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.24.13.tar.xz
+        sha512: c2a43861c04b89e5ad01f38394f3fa29bdb106eedcf1e066f69e5a6719d7e7bbb7f3b2da1cde68541a3928e68239adbe88573a59c89b5dc3aae621c8c822bd7f
         x-checker-data:
           type: anitya
           project-id: 21849
@@ -160,46 +160,47 @@ modules:
     modules:
       - name: zxing
         config-opts:
-        - -DCMAKE_BUILD_TYPE=RelWithDebug
-        - "-DBUILD_SHARED_LIBS=ON"
-        - "-DBUILD_EXAMPLES=OFF"
-        - "-DBUILD_BLACKBOX_TESTS=OFF"
-        - "-DBUILD_UNIT_TESTS=OFF"
+          - -DCMAKE_BUILD_TYPE=RelWithDebug
+          - -DBUILD_SHARED_LIBS=ON
+          - -DBUILD_EXAMPLES=OFF
+          - -DBUILD_BLACKBOX_TESTS=OFF
+          - -DBUILD_UNIT_TESTS=OFF
         # It installs in lib64 unless we overwrite libdir
-        - "-DCMAKE_INSTALL_LIBDIR=lib"
+          - -DCMAKE_INSTALL_LIBDIR=lib
         buildsystem: cmake-ninja
         builddir: true
         sources:
           - type: git
             url: https://github.com/zxing-cpp/zxing-cpp
-            tag: "v1.4.0"
+            tag: v1.4.0
             commit: f89db69e34543c508f80e807535dab3012eea7ad
             x-checker-data:
               type: anitya
               project-id: 376699,
               stable-only: true,
-              url-template: "https://github.com/zxing-cpp/zxing-cpp/archive/v$version.tar.gz"
+              url-template: https://github.com/zxing-cpp/zxing-cpp/archive/v$version.tar.gz
               versions:
-                "<": 2
+                <: 2
 
       - name: zbar
         config-opts:
-        - "--disable-doc"
-        - "--disable-video"
-        - "--with-python=python3"
-        - "--without-dbus"
-        - "--without-xv"
-        - "--without-gtk"
-        - "--without-qt"
+          - --disable-doc
+          - --disable-video
+          - --with-python=python3
+          - --without-dbus
+          - --without-xv
+          - --without-gtk
+          - --without-qt
         sources:
           - type: archive
-            url: https://www.linuxtv.org/downloads/zbar/zbar-0.23.93.tar.gz
+            url: https://linuxtv.org/downloads/zbar/zbar-0.23.93.tar.gz
             sha512: 61ac8d50c5d236f996cf60221198e3b9357329a9ecda67b29495001f59055ae0124fb1dd70c6ec075eb96eb2ef42c22604a447c9203126f9d0f8108a4e268056
             x-checker-data:
               type: json
               url: https://api.github.com/repos/mchehab/zbar/releases/latest
-              version-query: ".tag_name"
-              url-query: ".tag_name | sub(\"^\"; \"https://linuxtv.org/downloads/zbar/zbar-\") | sub(\"$\"; \".tar.gz\")"
+              version-query: .tag_name
+              url-query: .tag_name | sub("^"; "https://linuxtv.org/downloads/zbar/zbar-")
+                | sub("$"; ".tar.gz")
 
         modules:
           - name: imagemagick
@@ -211,8 +212,8 @@ modules:
               - --with-threads
             sources:
               - type: archive
-                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-12.tar.gz
-                sha512: 6a1de1e41ccddaee3832876b406ffc444c4cadfe79124879f85e9ac0eae4edf956111d08f9004548b1c0b2f19117fa6fa4bceae82248826a11919e195df939e5
+                url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-18.tar.gz
+                sha512: 168326e62c2ca5608a660e030b9777c7200458f9eb128854867e9bf20e1aa3d603a819aa3095fb3cf13133ceb9a9c9859374b7ce872bebb179c3afdf943ec831
                 x-checker-data:
                   type: anitya
                   project-id: 1372
@@ -229,15 +230,15 @@ modules:
         x-checker-data:
           type: anyita
           project-id: 1239
-          stable-only: True
+          stable-only: true
           url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
     modules:
       - name: swig
         config-opts:
-          - "--without-boost"
-          - "--without-pcre"
-          - "--without-perl5"
-          - "--without-javascript"
+          - --without-boost
+          - --without-pcre
+          - --without-perl5
+          - --without-javascript
         sources:
           - type: archive
             url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
@@ -246,26 +247,26 @@ modules:
 
   - name: bluez
     config-opts:
-    - "--disable-datafiles"
-    - "--disable-manpages"
-    - "--disable-systemd"
-    - "--enable-experimental"
-    - "--enable-library"
-    - "--disable-client"
-    - "--disable-mesh"
-    - "--disable-tools"
-    - "--disable-monitor"
-    - "--disable-udev"
-    - "--prefix=/app"
-    - "--sysconfdir=/app/etc"
+      - --disable-datafiles
+      - --disable-manpages
+      - --disable-systemd
+      - --enable-experimental
+      - --enable-library
+      - --disable-client
+      - --disable-mesh
+      - --disable-tools
+      - --disable-monitor
+      - --disable-udev
+      - --prefix=/app
+      - --sysconfdir=/app/etc
     sources:
-    - type: archive
-      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.64.tar.xz
-      sha512: f11f9974b29c5c6fce3890d7e42425c1cb02e42c1b8f49c5cc4b249234e67b64317d0e5e82721e2fbf1b53269c8569a9c869d59ce42b5e927f6622f0753e53cd
-      x-checker-data:
-        type: anitya
-        project-id: 10029
-        url-template: http://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
+      - type: archive
+        url: http://www.kernel.org/pub/linux/bluetooth/bluez-5.86.tar.xz
+        sha512: d3268be43ad869dabd9d9eabc7a0da699837bb5432ecf61e1756e03f9b867a1d989299db1493bd349d73b495d736f55d7518fbb9ee664de49e5d1cf7c2156df7
+        x-checker-data:
+          type: anitya
+          project-id: 10029
+          url-template: http://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
 
     modules:
       - name: libical
@@ -312,7 +313,8 @@ modules:
     build-commands:
       - pip3 freeze
       - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
-      - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
+      - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index
+        --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.2.0/gnome-keysign-1.2.0.tar.gz
