@@ -324,19 +324,13 @@ modules:
       - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
-      # This is the 1.9.0 release.  gitlab.gnome.org carries the code -- its
-      # master is exactly this commit -- but the 1.9.0 tag only exists on
-      # GitHub, so we pin the commit rather than name the tag.  Once the tag
-      # is pushed here this can go back to being an /archive/1.9.0/ URL.
+      # This is the 1.9.2 release.  gitlab.gnome.org carries the code, but
+      # the 1.9.2 tag only exists on GitHub, so we pin the commit rather
+      # than name the tag.  Once the tag is pushed here this can go back to
+      # being an /archive/1.9.2/ URL.
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/0acca5d2c1789a1002fd9f5602b4f5d87cc6d45b/gnome-keysign-0acca5d2c1789a1002fd9f5602b4f5d87cc6d45b.tar.gz
-        sha256: 13b8dcf5451429100b342131db52f78baf2d95317669189bc1b44c45ca14e867
-
-      # 1.9.0 predates the Python 3.13 the runtime ships: an unescaped
-      # surrogate in a docstring makes keysign.gpgkey fail to import.
-      # Upstream commit 7bcdf67f, drop this at the next release.
-      - type: patch
-        path: 0001-Fix-for-Python-3.13.patch
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/d227f5f9f34e906694d495992caf8ee4779152c1/gnome-keysign-d227f5f9f34e906694d495992caf8ee4779152c1.tar.gz
+        sha256: 827f3c9d5d4da6e7aadf004470baa9022e5e4575f60489571c36396a70c2e065
 
       - type: file
         path: org.gnome.Keysign.raw.appdata.xml
