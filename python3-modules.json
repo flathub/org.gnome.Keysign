@@ -263,28 +263,11 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/0d/ce/b735fa933e9ba4fa8c3f9aa9ae68b4e2d4aadb0a92b38ade30e37a7d4795/autobahn-26.7.1-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
-                    "sha256": "66ab6e034e54f8c473df1a6b8031a3db46c16deebaf0c9b66db3e9137d2fab5e",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/de/73/f109f563c27e048e45d135d81af19e6ca391e24905550b06bd1c9d674c57/autobahn-26.7.1.tar.gz",
+                    "sha256": "c6949a2c6eb95fb1c218837dbda0a59abbbebafb8b11098551c01a7061dfd245",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "autobahn",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/38/6d/f170134468e276fa9ea57eb1ae41f9cc0dcd0228e9d501f370fa50c0ee31/autobahn-26.7.1-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
-                    "sha256": "a5f285dce9b3dff3eb2ef6c818ac8ede24d96bd1edac340855170fc9825c38a9",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "autobahn",
-                        "packagetype": "bdist_wheel"
+                        "name": "autobahn"
                     }
                 },
                 {
