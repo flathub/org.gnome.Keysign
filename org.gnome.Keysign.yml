@@ -2,6 +2,8 @@ id: org.gnome.Keysign
 runtime: org.gnome.Platform
 runtime-version: '50'
 sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
 command: gnome-keysign
 copy-icon: true
 finish-args:
@@ -28,9 +30,15 @@ finish-args:
 # We're waiting for webcam support: https://github.com/flatpak/xdg-desktop-portal/issues/38;
 # we use --device=all meanwhile. We do network, because we're opening a port.
 build-options:
+  # rust-stable and the crates vendored below (cargo-vendor) for the Python
+  # modules whose extensions are written in Rust
+  append-path: /usr/lib/sdk/rust-stable/bin
   env:
     V: '1'
+    CARGO_HOME: /app/cargo
+    CARGO_NET_OFFLINE: 'true'
 cleanup:
+  - /cargo
   - /include
   - /lib/pkgconfig
   - /share/pkgconfig
@@ -292,15 +300,32 @@ modules:
   # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cryptography,cbor2,ujson -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data maturin==1.15.0 --build-only -o python3-maturin
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cryptography==50.0.1 -o python3-cryptography
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cbor2,ujson -o python3-modules-runtime
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
-  # and listed in build order: autobahn and magic-wormhole need hatchling and cffi
-  # installed to build, ahead of the lockfile's alphabetical order.  pip runs
-  # --no-index --no-build-isolation, so cryptography (Rust) and cbor2/ujson
-  # (setuptools_scm) take PyPI's wheels; cbor2's and ujson's track the runtime's
-  # Python.  --build-only strips the packages only the build needs from /app again.
+  #   flatpak-cargo-generator.py maturin-1.15.0/Cargo.lock -o maturin-cargo-sources.json
+  #   flatpak-cargo-generator.py cryptography-50.0.1/Cargo.lock -o cryptography-cargo-sources.json
+  # and listed in build order, since pip runs --no-index --no-build-isolation:
+  # maturin needs setuptools-rust; cryptography, autobahn and magic-wormhole need
+  # cffi (plus maturin or hatchling) installed to build.  cbor2 and ujson
+  # (setuptools_scm) take PyPI's wheels, which track the runtime's Python.
   - python3-modules-hatchling.json
   - python3-cffi.json
+  - python3-setuptools-rust.json
+
+  # maturin and cryptography are (partly) Rust.  cargo finds the crates vendored
+  # from their Cargo.lock files here, through CARGO_HOME in build-options above.
+  - name: cargo-vendor
+    buildsystem: simple
+    build-commands:
+      - cp -a cargo ${FLATPAK_DEST}/
+    sources:
+      - maturin-cargo-sources.json
+      - cryptography-cargo-sources.json
+  - python3-maturin.json
+  - python3-cryptography.json
   - python3-modules-runtime.json
   - python3-modules-build.json
 
