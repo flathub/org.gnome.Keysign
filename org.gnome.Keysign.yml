@@ -340,13 +340,9 @@ modules:
       - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
-      # This is the 1.9.5 release.  gitlab.gnome.org carries the code, but
-      # the 1.9.5 tag only exists on GitHub, so we pin the commit rather
-      # than name the tag.  Once the tag is pushed here this can go back to
-      # being an /archive/1.9.5/ URL.
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/49adbea372fa1d741a8f67e5e26adc33cd07b2a1/gnome-keysign-49adbea372fa1d741a8f67e5e26adc33cd07b2a1.tar.gz
-        sha256: bc313c05faf74bbe961e07695a51bb6fe25b15af8a9aa0c33f36a0577aec3ba5
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.6/gnome-keysign-1.9.6.tar.gz
+        sha256: bd75ea02639f2e4e61acf6a8b1ec745f7bb4a043ff04685c160ce363d0c4561e
 
       - type: file
         path: org.gnome.Keysign.raw.appdata.xml
