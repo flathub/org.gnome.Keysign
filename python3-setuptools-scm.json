@@ -1,0 +1,32 @@
+{
+    "name": "python3-setuptools-scm",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"setuptools-scm\" --no-build-isolation"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/70/dc/a48f9c8abaea3d5ed853803d406abf0aad5e4806e85ed5db66c1e638fed0/setuptools_scm-10.3.2-py3-none-any.whl",
+            "sha256": "809fe6c5842ba8daedfa4d5959f2774c14106adeed55d8985f0455e1f9cf50c3",
+            "x-checker-data": {
+                "type": "pypi",
+                "name": "setuptools-scm",
+                "packagetype": "bdist_wheel"
+            }
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/fc/e7/01c03c7bf28e353812dccc22d3b9629ea71c88edd64c8452601ecc64b189/vcs_versioning-2.4.0-py3-none-any.whl",
+            "sha256": "874a70bcd196b956a105852074554f498554d75399904fb1024002af79ad396c",
+            "x-checker-data": {
+                "type": "pypi",
+                "name": "vcs-versioning",
+                "packagetype": "bdist_wheel"
+            }
+        }
+    ],
+    "cleanup": [
+        "*"
+    ]
+}

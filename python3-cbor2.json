@@ -1,0 +1,18 @@
+{
+    "name": "python3-cbor2",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cbor2==6.1.4\" --no-build-isolation"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c6/14/b02446bacfe44351b1689c04937ade007588f44570431880a6937e525e6c/cbor2-6.1.4.tar.gz",
+            "sha256": "01ecc79a28f33d17331943ce508fc1e21f4b06553c73f874f4c77120d72b2ef9",
+            "x-checker-data": {
+                "type": "pypi",
+                "name": "cbor2"
+            }
+        }
+    ]
+}

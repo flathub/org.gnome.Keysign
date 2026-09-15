@@ -2,6 +2,8 @@ id: org.gnome.Keysign
 runtime: org.gnome.Platform
 runtime-version: '50'
 sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
 command: gnome-keysign
 copy-icon: true
 finish-args:
@@ -28,9 +30,15 @@ finish-args:
 # We're waiting for webcam support: https://github.com/flatpak/xdg-desktop-portal/issues/38;
 # we use --device=all meanwhile. We do network, because we're opening a port.
 build-options:
+  # rust-stable and the crates vendored below (cargo-vendor) for the Python
+  # modules whose extensions are written in Rust
+  append-path: /usr/lib/sdk/rust-stable/bin
   env:
     V: '1'
+    CARGO_HOME: /app/cargo
+    CARGO_NET_OFFLINE: 'true'
 cleanup:
+  - /cargo
   - /include
   - /lib/pkgconfig
   - /share/pkgconfig
@@ -291,14 +299,38 @@ modules:
 
   # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cryptography,cbor2,ujson -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data maturin==1.15.0 --build-only -o python3-maturin
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cryptography==50.0.1 -o python3-cryptography
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cbor2==6.1.4 -o python3-cbor2
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt -o python3-modules-runtime
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
-  # cffi is then moved to the front of the runtime list: autobahn and magic-wormhole
-  # need it and hatchling installed to build.  pip runs --no-index
-  # --no-build-isolation, so cryptography (Rust) and cbor2/ujson (setuptools_scm)
-  # take PyPI's wheels; cbor2's and ujson's track the runtime's Python.  --build-only
-  # strips the packages only the build needs from /app again.
+  #   flatpak-cargo-generator.py maturin-1.15.0/Cargo.lock -o maturin-cargo-sources.json
+  #   flatpak-cargo-generator.py cryptography-50.0.1/Cargo.lock -o cryptography-cargo-sources.json
+  #   flatpak-cargo-generator.py cbor2-6.1.4/rust/Cargo.lock -o cbor2-cargo-sources.json
+  # and listed in build order, since pip runs --no-index --no-build-isolation:
+  # maturin and cbor2 need setuptools-rust, cbor2 and ujson setuptools_scm, and
+  # cryptography, autobahn and magic-wormhole cffi (plus maturin or hatchling).
   - python3-modules-hatchling.json
+  - python3-cffi.json
+  - python3-setuptools-rust.json
+  - python3-setuptools-scm.json
+
+  # maturin, cryptography and cbor2 are (partly) Rust.  cargo finds the crates
+  # vendored from their Cargo.lock files here, through CARGO_HOME in build-options.
+  - name: cargo-vendor
+    buildsystem: simple
+    build-commands:
+      - cp -a cargo ${FLATPAK_DEST}/
+    sources:
+      - maturin-cargo-sources.json
+      - cryptography-cargo-sources.json
+      - cbor2-cargo-sources.json
+  - python3-maturin.json
+  - python3-cryptography.json
+  - python3-cbor2.json
   - python3-modules-runtime.json
   - python3-modules-build.json
 
@@ -313,13 +345,9 @@ modules:
       - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
-      # This is the 1.9.5 release.  gitlab.gnome.org carries the code, but
-      # the 1.9.5 tag only exists on GitHub, so we pin the commit rather
-      # than name the tag.  Once the tag is pushed here this can go back to
-      # being an /archive/1.9.5/ URL.
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/49adbea372fa1d741a8f67e5e26adc33cd07b2a1/gnome-keysign-49adbea372fa1d741a8f67e5e26adc33cd07b2a1.tar.gz
-        sha256: bc313c05faf74bbe961e07695a51bb6fe25b15af8a9aa0c33f36a0577aec3ba5
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.6/gnome-keysign-1.9.6.tar.gz
+        sha256: bd75ea02639f2e4e61acf6a8b1ec745f7bb4a043ff04685c160ce363d0c4561e
 
       - type: file
         path: org.gnome.Keysign.raw.appdata.xml
