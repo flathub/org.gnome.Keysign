@@ -289,29 +289,18 @@ modules:
               project-id: 1637
               url-template: https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz
 
-  # Generated from the pyproject.toml of the release we build below, with the
-  # pyproject.toml pulled out of that tarball:
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 \
-  #     --pyproject-file=pyproject.toml \
-  #     --prefer-wheels=cryptography,autobahn,cbor2,ujson \
-  #     --checker-data --output=python3-modules
-  # This covers the runtime dependencies and the build-system requires, so the
-  # --no-build-isolation install of gnome-keysign below finds everything.
-  #
-  # We install with --no-build-isolation and --no-index, so an sdist can only
-  # be built if its build backend is already in the SDK.  These four cannot be,
-  # so we take the wheels PyPI publishes for them instead:
-  #   cryptography  builds its core in Rust.  The alternative is pulling in the
-  #                 rust-stable SDK extension and vendoring a few hundred
-  #                 crates with flatpak-cargo-generator.
-  #   cbor2         wants setuptools-rust, and setuptools_scm to work out its
-  #                 own version -- without it the sdist builds as 0.0.0 and
-  #                 pip refuses it.
-  #   ujson         wants setuptools_scm, same story.
-  #   autobahn      builds with hatchling.
-  # Only cryptography's wheels are abi3; the others are tied to the runtime's
-  # Python version, so regenerate this whenever the runtime moves.
-  - python3-modules.json
+  # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cryptography,cbor2,ujson -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
+  # cffi is then moved to the front of the runtime list: autobahn and magic-wormhole
+  # need it and hatchling installed to build.  pip runs --no-index
+  # --no-build-isolation, so cryptography (Rust) and cbor2/ujson (setuptools_scm)
+  # take PyPI's wheels; cbor2's and ujson's track the runtime's Python.  --build-only
+  # strips the packages only the build needs from /app again.
+  - python3-modules-hatchling.json
+  - python3-modules-runtime.json
+  - python3-modules-build.json
 
   - name: gnome-keysign
     no-autogen: true
@@ -324,13 +313,13 @@ modules:
       - desktop-file-edit --set-key=Exec --set-value=/app/bin/gnome-keysign  ./data/org.gnome.Keysign.raw.desktop
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
-      # This is the 1.9.2 release.  gitlab.gnome.org carries the code, but
-      # the 1.9.2 tag only exists on GitHub, so we pin the commit rather
+      # This is the 1.9.5 release.  gitlab.gnome.org carries the code, but
+      # the 1.9.5 tag only exists on GitHub, so we pin the commit rather
       # than name the tag.  Once the tag is pushed here this can go back to
-      # being an /archive/1.9.2/ URL.
+      # being an /archive/1.9.5/ URL.
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/d227f5f9f34e906694d495992caf8ee4779152c1/gnome-keysign-d227f5f9f34e906694d495992caf8ee4779152c1.tar.gz
-        sha256: 827f3c9d5d4da6e7aadf004470baa9022e5e4575f60489571c36396a70c2e065
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/49adbea372fa1d741a8f67e5e26adc33cd07b2a1/gnome-keysign-49adbea372fa1d741a8f67e5e26adc33cd07b2a1.tar.gz
+        sha256: bc313c05faf74bbe961e07695a51bb6fe25b15af8a9aa0c33f36a0577aec3ba5
 
       - type: file
         path: org.gnome.Keysign.raw.appdata.xml
