@@ -291,14 +291,16 @@ modules:
 
   # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cryptography,cbor2,ujson -o python3-modules-runtime
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
-  # cffi is then moved to the front of the runtime list: autobahn and magic-wormhole
-  # need it and hatchling installed to build.  pip runs --no-index
-  # --no-build-isolation, so cryptography (Rust) and cbor2/ujson (setuptools_scm)
-  # take PyPI's wheels; cbor2's and ujson's track the runtime's Python.  --build-only
-  # strips the packages only the build needs from /app again.
+  # and listed in build order: autobahn and magic-wormhole need hatchling and cffi
+  # installed to build, ahead of the lockfile's alphabetical order.  pip runs
+  # --no-index --no-build-isolation, so cryptography (Rust) and cbor2/ujson
+  # (setuptools_scm) take PyPI's wheels; cbor2's and ujson's track the runtime's
+  # Python.  --build-only strips the packages only the build needs from /app again.
   - python3-modules-hatchling.json
+  - python3-cffi.json
   - python3-modules-runtime.json
   - python3-modules-build.json
 
