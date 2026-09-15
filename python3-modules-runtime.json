@@ -60,28 +60,11 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e3/21/69e4d37f00319b3d37322355aedc83154b4d8b75dc9e9789c06e1fbd8a92/cbor2-6.1.4-cp313-cp313-manylinux_2_28_x86_64.whl",
-                    "sha256": "36ae16d64b1f7b620c1af748e7b6947e20069ef80eee56871c5fbb84cc635905",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/c6/14/b02446bacfe44351b1689c04937ade007588f44570431880a6937e525e6c/cbor2-6.1.4.tar.gz",
+                    "sha256": "01ecc79a28f33d17331943ce508fc1e21f4b06553c73f874f4c77120d72b2ef9",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/35/3d/93eed770864540c5c9ea0841008208e9db686b7335f42520705b7d6dc6b2/cbor2-6.1.4-cp313-cp313-manylinux_2_28_aarch64.whl",
-                    "sha256": "4bd29f21529e279d50fc14f1a811f7b05b4d8e66a7969163cce98983b6817245",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
+                        "name": "cbor2"
                     }
                 },
                 {
@@ -193,28 +176,11 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/06/9a/cc0d306e93d1a8f1d48d54f52cb2cae39b56a4c990e2cd8cf328697bbc80/ujson-6.0.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
-                    "sha256": "5376a8c14d0eaf80789bdb10e21ae12582cdf526eb921a47f57053ef08c63f8c",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/64/7c/e1fa3fb70b53192436d751b5cb671f0ee960baa188b8351a7fec735223d3/ujson-6.0.0.tar.gz",
+                    "sha256": "80e23393feb707582e0ad495c397a4477b646d08094d2df64f7316f9fafd8aae",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/70/55/06a578dd00551b10bc94d68889387e5de11977ee92cc53921eb02713146f/ujson-6.0.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl",
-                    "sha256": "455e6ae6c925eca6358110e665a31e5bbcf0a93dfe9822a26b954c9351de2c3f",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
+                        "name": "ujson"
                     }
                 },
                 {
@@ -256,28 +222,11 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e3/21/69e4d37f00319b3d37322355aedc83154b4d8b75dc9e9789c06e1fbd8a92/cbor2-6.1.4-cp313-cp313-manylinux_2_28_x86_64.whl",
-                    "sha256": "36ae16d64b1f7b620c1af748e7b6947e20069ef80eee56871c5fbb84cc635905",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/c6/14/b02446bacfe44351b1689c04937ade007588f44570431880a6937e525e6c/cbor2-6.1.4.tar.gz",
+                    "sha256": "01ecc79a28f33d17331943ce508fc1e21f4b06553c73f874f4c77120d72b2ef9",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/35/3d/93eed770864540c5c9ea0841008208e9db686b7335f42520705b7d6dc6b2/cbor2-6.1.4-cp313-cp313-manylinux_2_28_aarch64.whl",
-                    "sha256": "4bd29f21529e279d50fc14f1a811f7b05b4d8e66a7969163cce98983b6817245",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
+                        "name": "cbor2"
                     }
                 }
             ]
@@ -566,28 +515,11 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e3/21/69e4d37f00319b3d37322355aedc83154b4d8b75dc9e9789c06e1fbd8a92/cbor2-6.1.4-cp313-cp313-manylinux_2_28_x86_64.whl",
-                    "sha256": "36ae16d64b1f7b620c1af748e7b6947e20069ef80eee56871c5fbb84cc635905",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/c6/14/b02446bacfe44351b1689c04937ade007588f44570431880a6937e525e6c/cbor2-6.1.4.tar.gz",
+                    "sha256": "01ecc79a28f33d17331943ce508fc1e21f4b06553c73f874f4c77120d72b2ef9",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/35/3d/93eed770864540c5c9ea0841008208e9db686b7335f42520705b7d6dc6b2/cbor2-6.1.4-cp313-cp313-manylinux_2_28_aarch64.whl",
-                    "sha256": "4bd29f21529e279d50fc14f1a811f7b05b4d8e66a7969163cce98983b6817245",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "cbor2",
-                        "packagetype": "bdist_wheel"
+                        "name": "cbor2"
                     }
                 },
                 {
@@ -808,28 +740,11 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/06/9a/cc0d306e93d1a8f1d48d54f52cb2cae39b56a4c990e2cd8cf328697bbc80/ujson-6.0.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
-                    "sha256": "5376a8c14d0eaf80789bdb10e21ae12582cdf526eb921a47f57053ef08c63f8c",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/64/7c/e1fa3fb70b53192436d751b5cb671f0ee960baa188b8351a7fec735223d3/ujson-6.0.0.tar.gz",
+                    "sha256": "80e23393feb707582e0ad495c397a4477b646d08094d2df64f7316f9fafd8aae",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/70/55/06a578dd00551b10bc94d68889387e5de11977ee92cc53921eb02713146f/ujson-6.0.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl",
-                    "sha256": "455e6ae6c925eca6358110e665a31e5bbcf0a93dfe9822a26b954c9351de2c3f",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
+                        "name": "ujson"
                     }
                 },
                 {
@@ -1524,28 +1439,11 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/06/9a/cc0d306e93d1a8f1d48d54f52cb2cae39b56a4c990e2cd8cf328697bbc80/ujson-6.0.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
-                    "sha256": "5376a8c14d0eaf80789bdb10e21ae12582cdf526eb921a47f57053ef08c63f8c",
-                    "only-arches": [
-                        "x86_64"
-                    ],
+                    "url": "https://files.pythonhosted.org/packages/64/7c/e1fa3fb70b53192436d751b5cb671f0ee960baa188b8351a7fec735223d3/ujson-6.0.0.tar.gz",
+                    "sha256": "80e23393feb707582e0ad495c397a4477b646d08094d2df64f7316f9fafd8aae",
                     "x-checker-data": {
                         "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
-                    }
-                },
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/70/55/06a578dd00551b10bc94d68889387e5de11977ee92cc53921eb02713146f/ujson-6.0.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl",
-                    "sha256": "455e6ae6c925eca6358110e665a31e5bbcf0a93dfe9822a26b954c9351de2c3f",
-                    "only-arches": [
-                        "aarch64"
-                    ],
-                    "x-checker-data": {
-                        "type": "pypi",
-                        "name": "ujson",
-                        "packagetype": "bdist_wheel"
+                        "name": "ujson"
                     }
                 }
             ]

@@ -301,22 +301,25 @@ modules:
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data maturin==1.15.0 --build-only -o python3-maturin
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cryptography==50.0.1 -o python3-cryptography
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt --prefer-wheels=cbor2,ujson -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cbor2==6.1.4 -o python3-cbor2
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt -o python3-modules-runtime
   #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
   #   flatpak-cargo-generator.py maturin-1.15.0/Cargo.lock -o maturin-cargo-sources.json
   #   flatpak-cargo-generator.py cryptography-50.0.1/Cargo.lock -o cryptography-cargo-sources.json
+  #   flatpak-cargo-generator.py cbor2-6.1.4/rust/Cargo.lock -o cbor2-cargo-sources.json
   # and listed in build order, since pip runs --no-index --no-build-isolation:
-  # maturin needs setuptools-rust; cryptography, autobahn and magic-wormhole need
-  # cffi (plus maturin or hatchling) installed to build.  cbor2 and ujson
-  # (setuptools_scm) take PyPI's wheels, which track the runtime's Python.
+  # maturin and cbor2 need setuptools-rust, cbor2 and ujson setuptools_scm, and
+  # cryptography, autobahn and magic-wormhole cffi (plus maturin or hatchling).
   - python3-modules-hatchling.json
   - python3-cffi.json
   - python3-setuptools-rust.json
+  - python3-setuptools-scm.json
 
-  # maturin and cryptography are (partly) Rust.  cargo finds the crates vendored
-  # from their Cargo.lock files here, through CARGO_HOME in build-options above.
+  # maturin, cryptography and cbor2 are (partly) Rust.  cargo finds the crates
+  # vendored from their Cargo.lock files here, through CARGO_HOME in build-options.
   - name: cargo-vendor
     buildsystem: simple
     build-commands:
@@ -324,8 +327,10 @@ modules:
     sources:
       - maturin-cargo-sources.json
       - cryptography-cargo-sources.json
+      - cbor2-cargo-sources.json
   - python3-maturin.json
   - python3-cryptography.json
+  - python3-cbor2.json
   - python3-modules-runtime.json
   - python3-modules-build.json
 
