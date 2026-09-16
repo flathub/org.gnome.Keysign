@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '50'
+runtime-version: '51'
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -159,14 +159,14 @@ modules:
 
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.26.11.tar.xz
-        sha512: 6a105d1b9f0d51c7c157b259e408b2f23aa44b74f3c60708c8024d7790e2fb2ee65884ae709a9dbb31a84d6b16447b127bc85153a3fe33082c0cc9a73eb950ef
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.6.tar.xz
+        sha512: 233c88e50af78204f1a707eba67350df1140d4293ae1bfe7a6f64ee9ce423968c4d9a515aed397cc88f302f69c86e11f3d6a7d43c406dbd30e34febc934b83d8
         x-checker-data:
           type: anitya
           project-id: 21849
           url-template: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$version.tar.xz
           versions:
-            <: 1.27.0
+            <: 1.29.0
 
     modules:
       - name: zxing
@@ -301,15 +301,15 @@ modules:
               url-template: https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz
 
   # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data maturin==1.15.0 --build-only -o python3-maturin
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cryptography==50.0.1 -o python3-cryptography
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cbor2==6.1.4 -o python3-cbor2
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt -o python3-modules-runtime
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data hatchling --build-only -o python3-modules-hatchling
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cffi==2.1.1 -o python3-cffi
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data maturin==1.15.0 --build-only -o python3-maturin
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cryptography==50.0.1 -o python3-cryptography
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cbor2==6.1.4 -o python3-cbor2
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data -r requirements.txt -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
   #   flatpak-cargo-generator.py maturin-1.15.0/Cargo.lock -o maturin-cargo-sources.json
   #   flatpak-cargo-generator.py cryptography-50.0.1/Cargo.lock -o cryptography-cargo-sources.json
   #   flatpak-cargo-generator.py cbor2-6.1.4/rust/Cargo.lock -o cbor2-cargo-sources.json
