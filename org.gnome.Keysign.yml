@@ -8,10 +8,13 @@ command: gnome-keysign
 copy-icon: true
 finish-args:
   - --share=ipc
-  - --socket=x11
-  # We are not Wayland ready yet, because of Twisted: https://github.com/flathub/org.gnome.Keysign/issues/14
-  #- --socket=fallback-x11
-  #- --socket=wayland
+  # Wayland used to be blocked by Twisted's gtk3reactor, which refused to
+  # start without an X11 DISPLAY (flathub issue 14). The app moved to
+  # gireactor during the GTK4 port, so that no longer applies. Running
+  # under XWayland also broke the fullscreen QR code window, because the
+  # X11 backend drops a fullscreen request made after the first present().
+  - --socket=fallback-x11
+  - --socket=wayland
   - --share=network
   - --system-talk-name=org.freedesktop.Avahi
   - --system-talk-name=org.bluez
