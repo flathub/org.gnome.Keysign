@@ -242,6 +242,18 @@ modules:
           project-id: 1239
           stable-only: True
           url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
+
+      # gpgme's configure looks for one exact interpreter binary per Python
+      # version it knows about, and 1.24.3 (the latest release) only knows up
+      # to python3.13. The GNOME 51 runtime ships python3.14 and no 3.13, so
+      # every probe came up empty, configure concluded there was no Python at
+      # all, and it quietly built only the "cl cpp" bindings. The app then
+      # died on "No module named 'gpg'". Teach that probe about 3.14; the
+      # version constraint on it is ">= 3.13", which 3.14 satisfies. Both are
+      # listed so this keeps working against an older runtime too.
+      - type: shell
+        commands:
+          - sed -i 's/in python3\.13 none/in python3.14 python3.13 none/' configure
     modules:
       - name: swig
         config-opts:
