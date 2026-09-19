@@ -1,0 +1,107 @@
+name: Build and smoke test
+
+# Flathub builds this manifest, but nothing here checked that the result
+# actually runs. A GNOME 51 build shipped without gpgme's Python bindings
+# and died at startup on "No module named 'gpg'": gpgme's configure had
+# quietly skipped them and still exited successfully, so the build was
+# green and the app was broken. These jobs run the built app so that kind
+# of failure stops being invisible.
+
+on:
+  # Every pull request, plus master itself. Left unfiltered, a pull request
+  # from a branch in this repository would trigger the push and the
+  # pull_request run both, and build everything twice.
+  push:
+    branches:
+      - master
+  pull_request:
+  # Runtimes gain new Python versions and dependencies move underneath us
+  # without anything in this repository changing, so also check on a
+  # schedule rather than only on commits.
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install flatpak and build tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder xvfb dbus-x11
+
+      - name: Add the flathub remote
+        run: |
+          flatpak remote-add --user --if-not-exists \
+            flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      # The heavy C/C++ modules (gst-plugins-bad, zxing, imagemagick) dominate
+      # the build, and they rarely change. Keying on the manifests means the
+      # cache is dropped exactly when a module definition does change.
+      - name: Cache flatpak-builder state
+        uses: actions/cache@v4
+        with:
+          path: .flatpak-builder
+          key: flatpak-builder-${{ runner.os }}-${{ hashFiles('*.yml', '*.json') }}
+          restore-keys: |
+            flatpak-builder-${{ runner.os }}-
+
+      - name: Build and install the app
+        run: |
+          flatpak-builder --user --install-deps-from=flathub --install \
+            --force-clean --default-branch=ci builddir org.gnome.Keysign.yml
+
+      # Checked separately from the app launch below, because a missing
+      # module gives a precise failure here, whereas in the launch it is
+      # just one more traceback in the log.
+      - name: Check the Python modules the app imports at startup
+        run: |
+          flatpak run --branch=ci --command=python3 org.gnome.Keysign -c '
+          import gpg
+          import gi
+          gi.require_version("Gtk", "4.0")
+          gi.require_version("Adw", "1")
+          gi.require_version("Gst", "1.0")
+          import keysign.app
+          print("startup imports OK, gpg from", gpg.__file__)
+          '
+
+      - name: Check that the app comes up
+        run: |
+          set -o pipefail
+          log=$(mktemp)
+
+          # The app runs until it is killed, so give it a bounded run and
+          # judge it by what it logged. It logs at DEBUG by default.
+          timeout 90 xvfb-run -a dbus-run-session -- \
+            flatpak run --branch=ci org.gnome.Keysign > "$log" 2>&1 || true
+
+          echo "::group::Application output"
+          cat "$log"
+          echo "::endgroup::"
+
+          # Logged by KeysignApp once the key list page is actually visible,
+          # so this means the UI came up rather than merely that the process
+          # survived for a while. It is also the only assertion worth
+          # failing on: a traceback that genuinely kills startup takes this
+          # line with it, and one that does not is by definition survivable.
+          # The app really does print a non-fatal traceback on a healthy
+          # start, when it cannot set the locale, so failing on the mere
+          # presence of "Traceback" would fail every run.
+          if ! grep -q "Key list page now visible" "$log"; then
+            echo "::error::The app never reached the key list page."
+            exit 1
+          fi
+
+          # Worth surfacing, not worth failing over.
+          if grep -q "Traceback" "$log"; then
+            echo "::warning::The app logged a traceback while starting, but still came up."
+          fi
+
+          echo "The app came up."

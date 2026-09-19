@@ -1,6 +1,6 @@
 id: org.gnome.Keysign
 runtime: org.gnome.Platform
-runtime-version: '50'
+runtime-version: '51'
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -8,10 +8,13 @@ command: gnome-keysign
 copy-icon: true
 finish-args:
   - --share=ipc
-  - --socket=x11
-  # We are not Wayland ready yet, because of Twisted: https://github.com/flathub/org.gnome.Keysign/issues/14
-  #- --socket=fallback-x11
-  #- --socket=wayland
+  # Wayland used to be blocked by Twisted's gtk3reactor, which refused to
+  # start without an X11 DISPLAY (flathub issue 14). The app moved to
+  # gireactor during the GTK4 port, so that no longer applies. Running
+  # under XWayland also broke the fullscreen QR code window, because the
+  # X11 backend drops a fullscreen request made after the first present().
+  - --socket=fallback-x11
+  - --socket=wayland
   - --share=network
   - --system-talk-name=org.freedesktop.Avahi
   - --system-talk-name=org.bluez
@@ -156,14 +159,14 @@ modules:
 
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.26.11.tar.xz
-        sha512: 6a105d1b9f0d51c7c157b259e408b2f23aa44b74f3c60708c8024d7790e2fb2ee65884ae709a9dbb31a84d6b16447b127bc85153a3fe33082c0cc9a73eb950ef
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.6.tar.xz
+        sha512: 233c88e50af78204f1a707eba67350df1140d4293ae1bfe7a6f64ee9ce423968c4d9a515aed397cc88f302f69c86e11f3d6a7d43c406dbd30e34febc934b83d8
         x-checker-data:
           type: anitya
           project-id: 21849
           url-template: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$version.tar.xz
           versions:
-            <: 1.27.0
+            <: 1.29.0
 
     modules:
       - name: zxing
@@ -239,6 +242,18 @@ modules:
           project-id: 1239
           stable-only: True
           url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
+
+      # gpgme's configure looks for one exact interpreter binary per Python
+      # version it knows about, and 1.24.3 (the latest release) only knows up
+      # to python3.13. The GNOME 51 runtime ships python3.14 and no 3.13, so
+      # every probe came up empty, configure concluded there was no Python at
+      # all, and it quietly built only the "cl cpp" bindings. The app then
+      # died on "No module named 'gpg'". Teach that probe about 3.14; the
+      # version constraint on it is ">= 3.13", which 3.14 satisfies. Both are
+      # listed so this keeps working against an older runtime too.
+      - type: shell
+        commands:
+          - sed -i 's/in python3\.13 none/in python3.14 python3.13 none/' configure
     modules:
       - name: swig
         config-opts:
@@ -298,15 +313,15 @@ modules:
               url-template: https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz
 
   # Regenerated from the release's requirements.txt (its pip-compile lockfile) with
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data hatchling --build-only -o python3-modules-hatchling
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cffi==2.1.1 -o python3-cffi
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data maturin==1.15.0 --build-only -o python3-maturin
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cryptography==50.0.1 -o python3-cryptography
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data cbor2==6.1.4 -o python3-cbor2
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data -r requirements.txt -o python3-modules-runtime
-  #   flatpak-pip-generator --runtime=org.gnome.Sdk//50 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data hatchling --build-only -o python3-modules-hatchling
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cffi==2.1.1 -o python3-cffi
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data setuptools-rust --build-only -o python3-setuptools-rust
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data setuptools-scm --build-only -o python3-setuptools-scm
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data maturin==1.15.0 --build-only -o python3-maturin
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cryptography==50.0.1 -o python3-cryptography
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data cbor2==6.1.4 -o python3-cbor2
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data -r requirements.txt -o python3-modules-runtime
+  #   flatpak-pip-generator --runtime=org.gnome.Sdk//51 --checker-data babel BabelGladeExtractor --build-only -o python3-modules-build
   #   flatpak-cargo-generator.py maturin-1.15.0/Cargo.lock -o maturin-cargo-sources.json
   #   flatpak-cargo-generator.py cryptography-50.0.1/Cargo.lock -o cryptography-cargo-sources.json
   #   flatpak-cargo-generator.py cbor2-6.1.4/rust/Cargo.lock -o cbor2-cargo-sources.json
@@ -346,9 +361,5 @@ modules:
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.6/gnome-keysign-1.9.6.tar.gz
-        sha256: bd75ea02639f2e4e61acf6a8b1ec745f7bb4a043ff04685c160ce363d0c4561e
-
-      - type: file
-        path: org.gnome.Keysign.raw.appdata.xml
-        dest: data
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.7/gnome-keysign-1.9.7.tar.gz
+        sha256: 7a3446a76e6d5bf6e05dfc131d174d5d57942259358017c634b082db0990aaca
