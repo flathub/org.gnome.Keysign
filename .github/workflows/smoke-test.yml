@@ -52,9 +52,29 @@ jobs:
           restore-keys: |
             flatpak-builder-${{ runner.os }}-
 
+      # Split downloading from building so a network blip costs a retry of
+      # the downloads rather than of a 20 minute build. flatpak-builder has
+      # no retry of its own, and these tarballs have no byte-identical
+      # mirrors to fall back on: zbar 0.23.93 exists only on linuxtv.org,
+      # and GitHub, Debian, Gentoo, Fedora, Nix and Software Heritage
+      # either repack it or do not carry it, so any copy would fail the
+      # checksum. One HTTP/2 stream error therefore failed the whole job.
+      - name: Download sources
+        run: |
+          for attempt in 1 2 3; do
+            if flatpak-builder --user --install-deps-from=flathub \
+                 --download-only builddir org.gnome.Keysign.yml; then
+              exit 0
+            fi
+            echo "::warning::Source download failed on attempt $attempt, retrying."
+            sleep $((attempt * 20))
+          done
+          echo "::error::Source download failed after 3 attempts."
+          exit 1
+
       - name: Build and install the app
         run: |
-          flatpak-builder --user --install-deps-from=flathub --install \
+          flatpak-builder --user --disable-download --install \
             --force-clean --default-branch=ci builddir org.gnome.Keysign.yml
 
       # Checked separately from the app launch below, because a missing
