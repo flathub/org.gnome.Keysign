@@ -34,7 +34,8 @@ jobs:
       - name: Install flatpak and build tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y flatpak flatpak-builder xvfb dbus-x11
+          sudo apt-get install -y flatpak flatpak-builder xvfb dbus-x11 \
+            avahi-daemon
 
       - name: Add the flathub remote
         run: |
@@ -91,6 +92,32 @@ jobs:
           import keysign.app
           print("startup imports OK, gpg from", gpg.__file__)
           '
+
+      # The receive page is built on Avahi, and with no daemon to talk to
+      # the app raises NoAvahiDbus and never reaches the key list page. A
+      # runner has no Avahi of its own, so start one. Avahi lives on the
+      # system bus, which the sandbox reaches through the manifest's
+      # --system-talk-name=org.freedesktop.Avahi, so nothing has to be
+      # forwarded into it.
+      - name: Start Avahi
+        run: |
+          sudo systemctl start avahi-daemon
+          # The unit returns before the daemon has claimed its bus name, and
+          # a daemon that dies on startup would otherwise show up as a
+          # puzzling application failure further down.
+          timeout 60 bash -c '
+            until dbus-send --system --dest=org.freedesktop.Avahi \
+                    --print-reply / \
+                    org.freedesktop.Avahi.Server.GetVersionString \
+                    > /dev/null 2>&1; do
+              sleep 1
+            done' || {
+            echo "::error::Avahi never claimed org.freedesktop.Avahi."
+            systemctl --no-pager status avahi-daemon || true
+            exit 1
+          }
+          dbus-send --system --dest=org.freedesktop.Avahi --print-reply / \
+            org.freedesktop.Avahi.Server.GetVersionString
 
       - name: Check that the app comes up
         run: |
