@@ -187,8 +187,8 @@ modules:
             commit: f89db69e34543c508f80e807535dab3012eea7ad
             x-checker-data:
               type: anitya
-              project-id: 376699,
-              stable-only: true,
+              project-id: 376699
+              stable-only: true
               url-template: "https://github.com/zxing-cpp/zxing-cpp/archive/v$version.tar.gz"
               versions:
                 "<": 2
@@ -238,7 +238,7 @@ modules:
         url: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.24.3.tar.bz2
         sha512: 3b5fc22a2f83576058ac14e744333f46df362b39f742d6c9e54a5a66828194a1312f5f365bdc15683e148821f5d591fa92a2daad83fc116f65dccf14e817ca48
         x-checker-data:
-          type: anyita
+          type: anitya
           project-id: 1239
           stable-only: True
           url-template: https://gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2
@@ -363,3 +363,8 @@ modules:
       - type: archive
         url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.8/gnome-keysign-1.9.8.tar.gz
         sha256: c10f28ee170f1431409ca9ffa78e7853801feb595379d6a5cc17c6b0e9209931
+        x-checker-data:
+          type: anitya
+          project-id: 383994
+          stable-only: true
+          url-template: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/$version/gnome-keysign-$version.tar.gz
