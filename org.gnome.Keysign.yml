@@ -361,5 +361,5 @@ modules:
       - pip3 install --verbose --no-build-isolation  --exists-action=i --no-index --find-links=\"file://${PWD}\"  --prefix=${FLATPAK_DEST} .
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.7/gnome-keysign-1.9.7.tar.gz
-        sha256: 7a3446a76e6d5bf6e05dfc131d174d5d57942259358017c634b082db0990aaca
+        url: https://gitlab.gnome.org/GNOME/gnome-keysign/-/archive/1.9.8/gnome-keysign-1.9.8.tar.gz
+        sha256: c10f28ee170f1431409ca9ffa78e7853801feb595379d6a5cc17c6b0e9209931
