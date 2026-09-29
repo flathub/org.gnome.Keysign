@@ -34,7 +34,8 @@ jobs:
       - name: Install flatpak and build tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y flatpak flatpak-builder xvfb dbus-x11
+          sudo apt-get install -y flatpak flatpak-builder xvfb dbus-x11 \
+            avahi-daemon
 
       - name: Add the flathub remote
         run: |
@@ -52,9 +53,29 @@ jobs:
           restore-keys: |
             flatpak-builder-${{ runner.os }}-
 
+      # Split downloading from building so a network blip costs a retry of
+      # the downloads rather than of a 20 minute build. flatpak-builder has
+      # no retry of its own, and these tarballs have no byte-identical
+      # mirrors to fall back on: zbar 0.23.93 exists only on linuxtv.org,
+      # and GitHub, Debian, Gentoo, Fedora, Nix and Software Heritage
+      # either repack it or do not carry it, so any copy would fail the
+      # checksum. One HTTP/2 stream error therefore failed the whole job.
+      - name: Download sources
+        run: |
+          for attempt in 1 2 3; do
+            if flatpak-builder --user --install-deps-from=flathub \
+                 --download-only builddir org.gnome.Keysign.yml; then
+              exit 0
+            fi
+            echo "::warning::Source download failed on attempt $attempt, retrying."
+            sleep $((attempt * 20))
+          done
+          echo "::error::Source download failed after 3 attempts."
+          exit 1
+
       - name: Build and install the app
         run: |
-          flatpak-builder --user --install-deps-from=flathub --install \
+          flatpak-builder --user --disable-download --install \
             --force-clean --default-branch=ci builddir org.gnome.Keysign.yml
 
       # Checked separately from the app launch below, because a missing
@@ -71,6 +92,32 @@ jobs:
           import keysign.app
           print("startup imports OK, gpg from", gpg.__file__)
           '
+
+      # The receive page is built on Avahi, and with no daemon to talk to
+      # the app raises NoAvahiDbus and never reaches the key list page. A
+      # runner has no Avahi of its own, so start one. Avahi lives on the
+      # system bus, which the sandbox reaches through the manifest's
+      # --system-talk-name=org.freedesktop.Avahi, so nothing has to be
+      # forwarded into it.
+      - name: Start Avahi
+        run: |
+          sudo systemctl start avahi-daemon
+          # The unit returns before the daemon has claimed its bus name, and
+          # a daemon that dies on startup would otherwise show up as a
+          # puzzling application failure further down.
+          timeout 60 bash -c '
+            until dbus-send --system --dest=org.freedesktop.Avahi \
+                    --print-reply / \
+                    org.freedesktop.Avahi.Server.GetVersionString \
+                    > /dev/null 2>&1; do
+              sleep 1
+            done' || {
+            echo "::error::Avahi never claimed org.freedesktop.Avahi."
+            systemctl --no-pager status avahi-daemon || true
+            exit 1
+          }
+          dbus-send --system --dest=org.freedesktop.Avahi --print-reply / \
+            org.freedesktop.Avahi.Server.GetVersionString
 
       - name: Check that the app comes up
         run: |
